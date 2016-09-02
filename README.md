@@ -1,9 +1,7 @@
-NAME OF THE PROJECT
+CROWD FUNNDNG
 ========
-This is a project for NUS 2016 summer Orbital Program
+This is a project for CS2102 2016 SEM1
 --------
-
-#### the idea of this project comes from [NotaBene](http://nb.mit.edu/)
  
 #### the following is to unify the coding style
 * html
@@ -42,10 +40,3 @@ This is a project for NUS 2016 summer Orbital Program
     ```javascript
     var nextStep = false;
     ```
-    
-* python
-    * the names for the classes should also follow JAVA convention (CamelCase)
-
-    * the names for the pyton modules (python files), **methods**, **functions**, **fields**, **variables** shuld all use lower-case words seperated using underscore "_" (PEP8)
-    * [django style](https://docs.djangoproject.com/es/1.9/internals/contributing/writing-code/coding-style/)
-    * [PEP8](https://www.python.org/dev/peps/pep-0008/)
