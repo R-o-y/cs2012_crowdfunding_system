@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+form {
+    border: 3px solid #f1f1f1;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #2F7CFB; /*changed to grey*/
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+.imgcontainer {
+
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+img.img {
+    width: 40%;
+    /*border-radius: 50%;*/
+}
+
+.container {  
+    padding: 16px;
+}
+
+</style>
+<title>Reset Password</title>
+<body>
+
+<h2>Reset Password</h2>
+
+<form action="#"> <!-- modification is needed-->
+  <div class="imgcontainer">
+    <img src="https://smartcatdesign.net/wp-content/uploads/edd/member_portal_logo.jpg" alt="a image" class="img">
+  </div>
+
+  <div class="container">
+    <label><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="uname" required>
+
+    <label><b>New Password</b></label>
+    <input type="password" placeholder="Enter New Password" name="psw" required>
+        
+    <button type="submit">Reset</button>
+    <input type="checkbox" > I won't forget password again
+  </div>
+</form>
+
+</body>
+</html>
