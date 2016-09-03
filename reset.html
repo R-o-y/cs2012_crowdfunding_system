@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+  </script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 <style>
-
 form {
     border: 3px solid #f1f1f1;
 }
@@ -35,7 +41,7 @@ img.img {
     /*border-radius: 50%;*/
 }
 
-.container {  
+.mycontainer {  
     padding: 16px;
 }
 
@@ -44,13 +50,16 @@ img.img {
 <body>
 
 <h2>Reset Password</h2>
-
+<ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li class="active">User Access</li>
+</ol>
 <form action="#"> <!-- modification is needed-->
   <div class="imgcontainer">
     <img src="https://smartcatdesign.net/wp-content/uploads/edd/member_portal_logo.jpg" alt="a image" class="img">
   </div>
 
-  <div class="container">
+  <div class="mycontainer">
     <label><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="uname" required>
 
