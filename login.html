@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+  </script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 <style>
 
 form {
@@ -35,8 +42,8 @@ img.img {
     /*border-radius: 50%;*/
 }
 
-.container {  
-    padding: 16px;
+.mycontainer {  
+    padding: 10px;
 }
 
 span.psw {
@@ -58,14 +65,17 @@ span.psw {
 <title>Crowdfunding login</title>
 <body>
 
-<h2>Crowdfunding login</h2>
-
-<form action="#"> <!-- modification is needed-->
+<h2>Crowdfunding login</h2><!-- modification is needed-->
+<ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li class="active">User Access</li>
+</ol>
+<form action="#"> 
   <div class="imgcontainer">
     <img src="https://smartcatdesign.net/wp-content/uploads/edd/member_portal_logo.jpg" alt="a image" class="img">
   </div>
-
-  <div class="container">
+  
+  <div class="mycontainer">
     <label><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="uname" required>
 
@@ -76,7 +86,7 @@ span.psw {
     <input type="checkbox" checked="checked"> Remember me
   </div>
 
-  <div class="container" style="background-color:#f1f1f1">
+  <div class="mycontainer" style="background-color:#f1f1f1">
     <span class="psw">Forgot <a href="reset.html">password?</a></span>
   </div>
 </form>
