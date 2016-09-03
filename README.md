@@ -1,4 +1,4 @@
-CROWDFUNNDNG
+CROWDFUNDNG
 ========
 This is a project for CS2102 in 2016/17 SEM1
 --------
