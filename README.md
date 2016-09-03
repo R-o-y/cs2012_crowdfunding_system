@@ -1,6 +1,6 @@
-CROWD FUNNDNG
+CROWDFUNNDNG
 ========
-This is a project for CS2102 2016 SEM1
+This is a project for CS2102 in 2016/17 SEM1
 --------
  
 #### the following is to unify the coding style
@@ -12,7 +12,7 @@ This is a project for CS2102 2016 SEM1
 
     * the class name in html should also follow JAVA convention (camelCase), while attribute "id" and "name" should use lower-case letters seperated with underscore "_"
     ```html
-    <div class= "FileViewer">
+    <div class="FileViewer">
         <div class="Page">     
             <img id="first_page_picture" src="">
             <iframe name="first_page_iframe"></iframe>
