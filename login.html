@@ -8,11 +8,9 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <style>
-
 form {
     border: 3px solid #f1f1f1;
 }
-
 input[type=text], input[type=password] {
     width: 100%;
     padding: 12px 20px;
@@ -21,7 +19,6 @@ input[type=text], input[type=password] {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
-
 button {
     background-color: #2F7CFB; /*changed to grey*/
     color: white;
@@ -31,26 +28,28 @@ button {
     cursor: pointer;
     width: 100%;
 }
+label:after {
+  content:"*";
+  color:red;
+  font-weight: bold;
+
+}
 .imgcontainer {
 
     text-align: center;
     margin: 24px 0 12px 0;
 }
-
 img.img {
     width: 40%;
     /*border-radius: 50%;*/
 }
-
 .mycontainer {  
-    padding: 10px;
+    padding: 16px;
 }
-
-span.psw {
+span.mypsw {
     float: right;
-    padding-top: 2px;
+    padding-top: 1px;
 }
-
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
     span.psw {
@@ -66,11 +65,14 @@ span.psw {
 <body>
 
 <h2>Crowdfunding login</h2><!-- modification is needed-->
+
 <ol class="breadcrumb">
     <li><a href="#">Home</a></li>
     <li class="active">User Access</li>
 </ol>
+
 <form action="#"> 
+
   <div class="imgcontainer">
     <img src="https://smartcatdesign.net/wp-content/uploads/edd/member_portal_logo.jpg" alt="a image" class="img">
   </div>
@@ -87,8 +89,9 @@ span.psw {
   </div>
 
   <div class="mycontainer" style="background-color:#f1f1f1">
-    <span class="psw">Forgot <a href="reset.html">password?</a></span>
+    <span class="mypsw">Forgot <a href="reset.html">password?</a></span>
   </div>
+
 </form>
 
 </body>
