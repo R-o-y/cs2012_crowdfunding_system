@@ -4,17 +4,17 @@ body {
 	font-family: 'Open Sans', sans-serif;
 }
 p {
-	color:#A7A7A7;
+	color:#8A8A8A;
 }
 a { 
-	color:#A7A7A7;
+	color:#8A8A8A;
 }
 
 /*-Header-*/
 .header {
 	background-color: #878787;
 	border-bottom: 10px solid #696969;
-	padding: 8px 0px;
+	padding: 1px 0;
 }
 
 /*-Section Blocks-*/
@@ -118,7 +118,7 @@ a {
 	font-weight:800;
 }
 .type-meta {
-	color:#A7A7A7;
+	color:#8A8A8A;
 	font-size: 12px;
 	display: inline-block;
 	margin: 0px 10px 10px 0px;
@@ -131,7 +131,7 @@ a {
 	font-weight:700;
 }
 .funding-meta p {
-	color: #A7A7A7;
+	color: #8A8A8A;
 	margin: 30px 0px 10px 0px;
 }
 .funding-meta h2, .funding-meta span.contribution {
