@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+  </script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<style>
+form {
+    border: 3px solid #f1f1f1;
+}
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+button {
+    background-color: #2F7CFB; /*changed to grey*/
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+label:after {
+  content:"*";
+  color:red;
+  font-weight: bold;
+
+}
+.imgcontainer {
+
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+img.img {
+    width: 40%;
+    /*border-radius: 50%;*/
+}
+.mycontainer {  
+    padding: 16px;
+}
+span.mypsw {
+    float: right;
+    padding-top: 1px;
+}
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
+}
+</style>
+<title>Create Account</title>
+<body>
+
+<h2>Create Account</h2><!-- modification is needed-->
+
+<ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li class="active">User Access</li>
+</ol>
+
+<form action="#"> 
+
+  <div class="imgcontainer">
+    <img src="https://smartcatdesign.net/wp-content/uploads/edd/member_portal_logo.jpg" alt="a image" class="img">
+  </div>
+  
+  <div class="mycontainer">
+    <label><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="uname" required>
+
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+        
+    <button type="submit">Create Account</button>
+  </div>
+
+</form>
+
+</body>
+</html>
