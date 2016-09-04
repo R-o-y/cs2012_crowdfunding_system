@@ -1,6 +1,5 @@
-
 body {
-	background-color:#ECEBEB;
+	background-color: #ECEBEB;
 	font-family: 'Open Sans', sans-serif;
 }
 p {
@@ -12,9 +11,10 @@ a {
 
 /*-Header-*/
 .header {
-	background-color: #878787;
-	border-bottom: 10px solid #696969;
-	padding: 1px 0;
+	background-color: #ffffff;
+	/*#878787;*/
+	/*border-bottom: 18px solid #878787;*/
+	/*padding: 1px 0;*/
 }
 
 /*-Section Blocks-*/
@@ -297,6 +297,6 @@ a {
 }
 
 /*-Overrides-*/
-.btn, input{
+/*.btn, input {
 	outline:none;
-{
+{*/
