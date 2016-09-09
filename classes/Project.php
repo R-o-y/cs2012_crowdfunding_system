@@ -57,6 +57,20 @@ class Project {
     }
 
     /**
+     * Get the project blonging categories
+     *
+     */
+    public function getCategories() {
+        $sql = sprintf("SELECT * FROM category c WHERE EXISTS (SELECT * FROM project_category pc WHERE pc.project_id = %d AND pc.category_id = c.id)", $this->id);
+        $categories = array();
+        $results = self::$connection->execute($sql);
+        foreach ($results as $category_arr) {
+            array_push($categories, new Category($category_arr));
+        }
+        return $categories;
+    }
+
+    /**
      * Check global connection
      */
     public static function checkConnection() {

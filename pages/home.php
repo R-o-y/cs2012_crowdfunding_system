@@ -37,11 +37,11 @@
                     <!--project begin-->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><?php $project->title ?></h3>
+                            <h3 class="panel-title"><?php echo $project->title ?></h3>
                         </div>
                         <div class="panel-body">
                             <!--summary-->
-                            <p><?php $project->description ?></p>
+                            <p><?php echo $project->description ?></p>
 
                             <!--image display-->
                             <div class="row">
@@ -74,9 +74,15 @@
                             <!--tag display-->
                             <div class="row">
                                 <div class="col-md-12 text-right">
-                                    <span class="label label-default">War</span>
-                                    <span class="label label-default">Education</span>
-                                    <span class="label label-default">Family</span>
+                                    <?php
+                                    foreach ($project->getCategories() as $category) {
+                                        ?>
+                                            <span class="label label-default"
+                                            onclick="window.location.replace('<?php echo url(['_page' => 'home', '_category' => $category->id]) ?>')"
+                                            ><?php echo $category->name; ?></span>
+                                        <?
+                                    }
+                                    ?>
                                 </div>
                             </div>
                             <br>
@@ -88,7 +94,7 @@
                                     <div class="alert alert-info" role="alert">
                                         <div class="row">
                                             <div class="col-xs-6 col-md-3 text-center">
-                                                <strong><?php $project->goal ?></strong>
+                                                <strong><?php echo $project->goal ?></strong>
                                                 <div>total goal</div>
                                             </div>
                                             <div class="col-xs-6 col-md-3 text-center">
@@ -100,7 +106,7 @@
                                                 <div>donors</div>
                                             </div>
                                             <div class="col-xs-6 col-md-3 text-center">
-                                                <strong><?php $project->duration ?></strong>
+                                                <strong><?php echo $project->duration ?></strong>
                                                 <div>day active</div>
                                             </div>
                                         </div>
