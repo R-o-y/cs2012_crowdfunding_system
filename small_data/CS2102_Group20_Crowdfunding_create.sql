@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2016-09-09 07:10:44.607
+-- Last modification date: 2016-09-09 10:13:39.416
 
 -- tables
 -- Table: category
@@ -34,10 +34,9 @@ CREATE TABLE project (
 
 -- Table: project_category
 CREATE TABLE project_category (
-    id int NOT NULL,
     project_id int NOT NULL,
     category_id int NOT NULL,
-    CONSTRAINT project_category_pk PRIMARY KEY (id)
+    CONSTRAINT project_category_pk PRIMARY KEY (project_id,category_id)
 );
 
 -- Table: session
@@ -54,6 +53,7 @@ CREATE TABLE user (
     email varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
     is_admin bool NOT NULL,
+    UNIQUE INDEX email (email),
     CONSTRAINT user_pk PRIMARY KEY (id)
 );
 
