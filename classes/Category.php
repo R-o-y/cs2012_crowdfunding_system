@@ -67,7 +67,7 @@ Class Category {
         if (count($results) != 1) {
             return 0;
         } else {
-            return $results[0]['numPorject'];
+            return $results[0]['numporject'];
         }
     }
 

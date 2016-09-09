@@ -37,11 +37,11 @@
                     <!--project begin-->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><?php echo $project->title ?></h3>
+                            <h3 class="panel-title"><?php echo $project->title; ?></h3>
                         </div>
                         <div class="panel-body">
                             <!--summary-->
-                            <p><?php echo $project->description ?></p>
+                            <p><?php echo $project->description; ?></p>
 
                             <!--image display-->
                             <div class="row">
@@ -78,9 +78,9 @@
                                     foreach ($project->getCategories() as $category) {
                                         ?>
                                             <span class="label label-default"
-                                            onclick="window.location.replace('<?php echo url(['_page' => 'home', '_category' => $category->id]) ?>')"
+                                            onclick="window.location.replace('<?php echo url(['_page' => 'home', '_category' => $category->id]); ?>')"
                                             ><?php echo $category->name; ?></span>
-                                        <?
+                                        <?php
                                     }
                                     ?>
                                 </div>
@@ -94,7 +94,7 @@
                                     <div class="alert alert-info" role="alert">
                                         <div class="row">
                                             <div class="col-xs-6 col-md-3 text-center">
-                                                <strong><?php echo $project->goal ?></strong>
+                                                <strong><?php echo $project->goal; ?></strong>
                                                 <div>total goal</div>
                                             </div>
                                             <div class="col-xs-6 col-md-3 text-center">
@@ -106,7 +106,7 @@
                                                 <div>donors</div>
                                             </div>
                                             <div class="col-xs-6 col-md-3 text-center">
-                                                <strong><?php echo $project->duration ?></strong>
+                                                <strong><?php echo $project->duration; ?></strong>
                                                 <div>day active</div>
                                             </div>
                                         </div>
@@ -125,14 +125,14 @@
                         </div>
                     </div>
                     <!--project end-->
-                    <?
+                    <?php
                 }
             } else {
                 ?>
                 <div class="alert alert-warning" role="alert">
                     Current not project. <a href="#"><strong>Be the first one</strong></a>  to post project for crowdfunding?
                 </div>
-                <?
+                <?php
             }
             ?>
 
@@ -149,7 +149,7 @@
                         <?php echo $current_category->name; ?> <span class="badge"><?php echo $current_category->getBelongedNumProjects(); ?></span>
                     </a>
                 </div>
-                <?
+                <?php
             }
             ?>
 
@@ -160,17 +160,17 @@
                 foreach (Category::getAll() as $category) {
                     if ($category->activate) {
                         ?>
-                        <a href="<?php echo url(['_page' => 'home', '_category' => $category->id]) ?>"
+                        <a href="<?php echo url(['_page' => 'home', '_category' => $category->id]); ?>"
                            class="list-group-item active">
                             <?php echo $category->name; ?> <span class="badge"><?php echo $category->getBelongedNumProjects(); ?></span>
                         </a>
-                        <?
+                        <?php
                     } else {
                         ?>
-                        <a href="<?php echo url(['_page' => 'home', '_category' => $category->id]) ?>" class="list-group-item">
+                        <a href="<?php echo url(['_page' => 'home', '_category' => $category->id]); ?>" class="list-group-item">
                             <?php echo $category->name; ?> <span class="badge"><?php echo $category->getBelongedNumProjects(); ?></span>
                         </a>
-                        <?
+                        <?php
                     }
                 }
                 ?>

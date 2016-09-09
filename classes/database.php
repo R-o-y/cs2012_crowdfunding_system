@@ -27,8 +27,11 @@ class Database {
      */
     public function connect() {
         $this->parse_config_file();
-        $this->connection = new mysqli($this->config['DB_HOST'], $this->config['DB_USERNAME'],
-                                        $this->config['DB_PASSWORD'], $this->config['DB_DATABASE']);
+        $db_host = $this->config['DB_HOST'];
+        $db_database = $this->config['DB_DATABASE'];
+        $db_username = $this->config['DB_USERNAME'];
+        $db_password = $this->config['DB_PASSWORD'];
+        $this->connection = pg_connect("host=$db_host dbname=$db_database user=$db_username password=$db_password");
         $this->report_error();
     }
 
@@ -36,8 +39,10 @@ class Database {
      * Display error to user
      */
     public function report_error() {
-        if ($this->connection && $this->connection->connect_errno) {
-            die($this->connection->connect_errno . "\n" . $this->connection->connect_error);
+        if (!$this->connection && pg_last_error($this->connection)) {
+            die(pg_last_error($this->connection));
+        } else if (!$this->connection) {
+            die("No database connection!");
         }
     }
 
@@ -67,10 +72,10 @@ class Database {
      * @return array
      */
     public function execute($sql) {
-        $result = $this->connection->query($sql);
+        $result = pg_query($sql);
         $this->report_error();
         $returned_array = array();
-        while($item = $result->fetch_assoc()) {
+        while($item = pg_fetch_array($result, null, PGSQL_ASSOC)) {
             array_push($returned_array, $item);
         }
         return $returned_array;
