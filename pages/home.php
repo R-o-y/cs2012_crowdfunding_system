@@ -25,134 +25,138 @@
 </head>
 <body>
 <div class="container">
-    <div class="col-md-8">
-        <h4>Current</h4>
-        <?php
+    <?php require('pages/_header.php'); ?>
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Current</h4>
+            <?php
             $projects = Project::getAll();
             if (count($projects)) {
                 foreach ($projects as $project) {
                     ?>
                     <!--project begin-->
                     <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><?php $project->title ?></h3>
-                    </div>
-                    <div class="panel-body">
-                        <!--summary-->
-                        <p><?php $project->description ?></p>
-
-                        <!--image display-->
-                        <div class="row">
-                            <div class="col-xs-6 col-md-3">
-                                <a href="#" class="thumbnail">
-                                    <img src="https://s18.postimg.org/irz1j03nt/Screen_Shot_2016_08_04_at_12_19_28_AM.png"
-                                         alt="test1" style="height: 100px; width: 100%; display: block;">
-                                </a>
-                            </div>
-                            <div class="col-xs-6 col-md-3">
-                                <a href="#" class="thumbnail">
-                                    <img src="https://s18.postimg.org/vxj52umx5/Screen_Shot_2016_07_27_at_3_35_55_PM.png"
-                                         alt="test2" style="height: 100px; width: 100%; display: block;">
-                                </a>
-                            </div>
-                            <div class="col-xs-6 col-md-3">
-                                <a href="#" class="thumbnail">
-                                    <img src="https://s18.postimg.org/n3s8lqzyh/Screen_Shot_2016_07_25_at_11_52_58_PM.png"
-                                         alt="test3" style="height: 100px; width: 100%; display: block;">
-                                </a>
-                            </div>
-                            <div class="col-xs-6 col-md-3">
-                                <a href="#" class="thumbnail">
-                                    <img src="https://s18.postimg.org/jlg8pcz2h/Screen_Shot_2016_07_25_at_4_04_34_PM.png"
-                                         alt="test4" style="height: 100px; width: 100%; display: block;">
-                                </a>
-                            </div>
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><?php $project->title ?></h3>
                         </div>
+                        <div class="panel-body">
+                            <!--summary-->
+                            <p><?php $project->description ?></p>
 
-                        <!--tag display-->
-                        <div class="row">
-                            <div class="col-md-12 text-right">
-                                <span class="label label-default">War</span>
-                                <span class="label label-default">Education</span>
-                                <span class="label label-default">Family</span>
+                            <!--image display-->
+                            <div class="row">
+                                <div class="col-xs-6 col-md-3">
+                                    <a href="#" class="thumbnail">
+                                        <img src="https://s18.postimg.org/irz1j03nt/Screen_Shot_2016_08_04_at_12_19_28_AM.png"
+                                             alt="test1" style="height: 100px; width: 100%; display: block;">
+                                    </a>
+                                </div>
+                                <div class="col-xs-6 col-md-3">
+                                    <a href="#" class="thumbnail">
+                                        <img src="https://s18.postimg.org/vxj52umx5/Screen_Shot_2016_07_27_at_3_35_55_PM.png"
+                                             alt="test2" style="height: 100px; width: 100%; display: block;">
+                                    </a>
+                                </div>
+                                <div class="col-xs-6 col-md-3">
+                                    <a href="#" class="thumbnail">
+                                        <img src="https://s18.postimg.org/n3s8lqzyh/Screen_Shot_2016_07_25_at_11_52_58_PM.png"
+                                             alt="test3" style="height: 100px; width: 100%; display: block;">
+                                    </a>
+                                </div>
+                                <div class="col-xs-6 col-md-3">
+                                    <a href="#" class="thumbnail">
+                                        <img src="https://s18.postimg.org/jlg8pcz2h/Screen_Shot_2016_07_25_at_4_04_34_PM.png"
+                                             alt="test4" style="height: 100px; width: 100%; display: block;">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <br>
 
-                        <!--fund summary-->
-                        <!--<div class="alert alert-success" role="alert">...</div>-->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="alert alert-info" role="alert">
-                                    <div class="row">
-                                        <div class="col-xs-6 col-md-3 text-center">
-                                            <strong><?php $project->goal ?></strong>
-                                            <div>total goal</div>
-                                        </div>
-                                        <div class="col-xs-6 col-md-3 text-center">
-                                            <strong>$2000</strong>
-                                            <div>remaining</div>
-                                        </div>
-                                        <div class="col-xs-6 col-md-3 text-center">
-                                            <strong>24564</strong>
-                                            <div>donors</div>
-                                        </div>
-                                        <div class="col-xs-6 col-md-3 text-center">
-                                            <strong><?php $project->duration ?></strong>
-                                            <div>day active</div>
+                            <!--tag display-->
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <span class="label label-default">War</span>
+                                    <span class="label label-default">Education</span>
+                                    <span class="label label-default">Family</span>
+                                </div>
+                            </div>
+                            <br>
+
+                            <!--fund summary-->
+                            <!--<div class="alert alert-success" role="alert">...</div>-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-info" role="alert">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-3 text-center">
+                                                <strong><?php $project->goal ?></strong>
+                                                <div>total goal</div>
+                                            </div>
+                                            <div class="col-xs-6 col-md-3 text-center">
+                                                <strong>$2000</strong>
+                                                <div>remaining</div>
+                                            </div>
+                                            <div class="col-xs-6 col-md-3 text-center">
+                                                <strong>24564</strong>
+                                                <div>donors</div>
+                                            </div>
+                                            <div class="col-xs-6 col-md-3 text-center">
+                                                <strong><?php $project->duration ?></strong>
+                                                <div>day active</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--<div class="alert alert-warning" role="alert">...</div>-->
-                        <!--<div class="alert alert-danger" role="alert">...</div>-->
+                            <!--<div class="alert alert-warning" role="alert">...</div>-->
+                            <!--<div class="alert alert-danger" role="alert">...</div>-->
 
-                        <!--more detail-->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <a class="btn btn-default btn-block" href="#" role="button">More..</a>
+                            <!--more detail-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a class="btn btn-default btn-block" href="#" role="button">More..</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                     <!--project end-->
                     <?
                 }
             } else {
                 ?>
-                    <div class="alert alert-warning" role="alert">
-                        Current not project. <a href="#"><strong>Be the first one</strong></a>  to post project for crowdfunding?
-                    </div>
+                <div class="alert alert-warning" role="alert">
+                    Current not project. <a href="#"><strong>Be the first one</strong></a>  to post project for crowdfunding?
+                </div>
                 <?
             }
-        ?>
-
-    </div>
-    <div class="col-md-4">
-        <!--tag list-->
-        <h4>Category</h4>
-        <div class="list-group">
-            <?php
-            foreach (Category::getAll() as $category) {
-                if ($category->activate) {
-                    ?>
-                    <a href="<?php echo url(['_page' => 'home', '_category' => $category->id]) ?>"
-                       class="list-group-item active">
-                        <?php echo $category->name; ?>
-                    </a>
-                    <?
-                } else {
-                    ?>
-                    <a href="<?php echo url(['_page' => 'home', '_category' => $category->id]) ?>" class="list-group-item">
-                        <?php echo $category->name; ?>
-                    </a>
-                    <?
-                }
-            }
             ?>
+
+        </div>
+        <div class="col-md-4">
+            <!--tag list-->
+            <h4>Category</h4>
+            <div class="list-group">
+                <?php
+                foreach (Category::getAll() as $category) {
+                    if ($category->activate) {
+                        ?>
+                        <a href="<?php echo url(['_page' => 'home', '_category' => $category->id]) ?>"
+                           class="list-group-item active">
+                            <?php echo $category->name; ?> <span class="badge"><?php echo $category->getBelongedNumProjects(); ?></span>
+                        </a>
+                        <?
+                    } else {
+                        ?>
+                        <a href="<?php echo url(['_page' => 'home', '_category' => $category->id]) ?>" class="list-group-item">
+                            <?php echo $category->name; ?> <span class="badge"><?php echo $category->getBelongedNumProjects(); ?></span>
+                        </a>
+                        <?
+                    }
+                }
+                ?>
+            </div>
         </div>
     </div>
+    <?php require('pages/_footer.php'); ?>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -75,7 +75,13 @@ class Project {
      */
     public static function getAll() {
         self::checkConnection();
-        $results = self::$connection->execute("SELECT * FROM project;");
+        $sql = "SELECT * FROM project;";
+        if(isset($_GET['_category'])) {
+            $category_id = $_GET['_category'];
+            settype($category_id, 'integer');
+            $sql = sprintf("SELECT * FROM project WHERE id IN (SELECT project_id FROM project_category WHERE category_id = %d)", $category_id);
+        }
+        $results = self::$connection->execute($sql);
         $projects = array();
         foreach ($results as $project_arr) {
             array_push($projects, new Project($project_arr));

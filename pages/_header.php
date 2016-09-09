@@ -1,11 +1,11 @@
 <!--header begin-->
+<br>
+
 <div class="row">
-    <div class="col-md-12">
-        <img class="img-responsive" alt="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/120px-Intel-logo.svg.png">
+    <div class="col-md-3">
+        <img class="img-responsive" alt="logo" src="image/logo.png">
     </div>
 </div>
-
-<br>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">

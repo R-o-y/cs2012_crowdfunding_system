@@ -20,6 +20,7 @@ Class Category {
      * @param $category_arr
      */
     public function Category($category_arr) {
+        self::checkConnection();
         $this->validateAndSetData($category_arr);
         $this->checkIfCurrent();
     }
@@ -50,6 +51,39 @@ Class Category {
         } else {
             $this->activate = false;
         }
+    }
+
+
+    /**
+     * Get number of projects that belong to the category
+     *
+     * @return number
+     */
+    public function getBelongedNumProjects() {
+        $sql = "SELECT numPorject FROM category_numproject WHERE category_id = %d";
+        $sql = sprintf($sql, $this->id);
+        $results = self::$connection->execute($sql);
+        if (count($results) != 1) {
+            return 0;
+        } else {
+            return $results[0]['numPorject'];
+        }
+    }
+
+    /**
+     * Get projects under this category
+     *
+     * @return array
+     */
+    public function getBelongedProjects() {
+        $sql = "SELECT * FROM project p WHERE p.id IN (SELECT pc.project_id FROM project_category WHERE category_id = %d);";
+        $sql = sprintf($sql, $this->id);
+        $results = self::$connection->execute($sql);
+        $projects = array();
+        foreach ($results as $project_arr) {
+            array_push($projects, new Project($project_arr));
+        }
+        return $projects;
     }
 
 
