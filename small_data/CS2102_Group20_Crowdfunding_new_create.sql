@@ -1,7 +1,18 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2016-09-09 10:48:07.097
+-- Last modification date: 2016-09-09 11:17:08.326
 
 -- tables
+-- Table: account
+CREATE TABLE account (
+    id int  NOT NULL,
+    name varchar(255)  NOT NULL,
+    email varchar(255)  NOT NULL,
+    password varchar(255)  NOT NULL,
+    is_admin bool  NOT NULL,
+    CONSTRAINT email UNIQUE (email) NOT DEFERRABLE  INITIALLY IMMEDIATE,
+    CONSTRAINT account_pk PRIMARY KEY (id)
+);
+
 -- Table: category
 CREATE TABLE category (
     id int  NOT NULL,
@@ -46,17 +57,6 @@ CREATE TABLE session (
     CONSTRAINT session_pk PRIMARY KEY (id)
 );
 
--- Table: user
-CREATE TABLE "user" (
-    id int  NOT NULL,
-    name varchar(255)  NOT NULL,
-    email varchar(255)  NOT NULL,
-    password varchar(255)  NOT NULL,
-    is_admin bool  NOT NULL,
-    CONSTRAINT email UNIQUE (email) NOT DEFERRABLE  INITIALLY IMMEDIATE,
-    CONSTRAINT user_pk PRIMARY KEY (id)
-);
-
 -- views
 -- View: category_numProject
 CREATE VIEW category_numProject AS
@@ -90,7 +90,7 @@ ALTER TABLE donation ADD CONSTRAINT project_supporter
 -- Reference: user_Session (table: session)
 ALTER TABLE session ADD CONSTRAINT user_Session
     FOREIGN KEY (user_id)
-    REFERENCES "user" (id)  
+    REFERENCES account (id)  
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
@@ -98,7 +98,7 @@ ALTER TABLE session ADD CONSTRAINT user_Session
 -- Reference: user_project (table: project)
 ALTER TABLE project ADD CONSTRAINT user_project
     FOREIGN KEY (owner_id)
-    REFERENCES "user" (id)  
+    REFERENCES account (id)  
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
@@ -106,7 +106,7 @@ ALTER TABLE project ADD CONSTRAINT user_project
 -- Reference: user_supporter (table: donation)
 ALTER TABLE donation ADD CONSTRAINT user_supporter
     FOREIGN KEY (user_id)
-    REFERENCES "user" (id)  
+    REFERENCES account (id)  
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
