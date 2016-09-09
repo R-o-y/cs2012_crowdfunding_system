@@ -133,13 +133,24 @@
         <!--tag list-->
         <h4>Category</h4>
         <div class="list-group">
-            <a href="#" class="list-group-item active">
-                War
-            </a>
-            <a href="#" class="list-group-item">Family</a>
-            <a href="#" class="list-group-item">Boy</a>
-            <a href="#" class="list-group-item">Girl</a>
-            <a href="#" class="list-group-item">Love</a>
+            <?php
+            foreach (Category::getAll() as $category) {
+                if ($category->activate) {
+                    ?>
+                    <a href="<?php echo url(['_page' => 'home', '_category' => $category->id]) ?>"
+                       class="list-group-item active">
+                        <?php echo $category->name; ?>
+                    </a>
+                    <?
+                } else {
+                    ?>
+                    <a href="<?php echo url(['_page' => 'home', '_category' => $category->id]) ?>" class="list-group-item">
+                        <?php echo $category->name; ?>
+                    </a>
+                    <?
+                }
+            }
+            ?>
         </div>
     </div>
 </div>

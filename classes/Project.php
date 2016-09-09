@@ -8,13 +8,13 @@
 class Project {
     private static $connection;
 
-    private $id;
-    private $title;
-    private $description;
-    private $goal;
-    private $start_date;
-    private $duration;
-    private $owner_id;
+    public $id;
+    public $title;
+    public $description;
+    public $goal;
+    public $start_date;
+    public $duration;
+    public $owner_id;
 
     /**
      * Project constructor.

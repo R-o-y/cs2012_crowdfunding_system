@@ -1,7 +1,9 @@
 <?php
 date_default_timezone_set("Asia/Singapore");
+require('functions/helpers.php');
 require('classes/Database.php');
 require('classes/Project.php');
+require('classes/Category.php');
 $gb_connection = new Database();
 
 // simple router
