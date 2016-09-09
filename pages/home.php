@@ -132,6 +132,21 @@
 
         </div>
         <div class="col-md-4">
+            <!--current category-->
+            <?php
+            $current_category = Category::current();
+            if ($current_category) {
+                ?>
+                <h4>Current Category</h4>
+                <div class="list-group">
+                    <a href="<?php echo url(['_page' => 'home', '_category' => $current_category->id]) ?>" class="list-group-item active">
+                        <?php echo $current_category->name; ?> <span class="badge"><?php echo $current_category->getBelongedNumProjects(); ?></span>
+                    </a>
+                </div>
+                <?
+            }
+            ?>
+
             <!--tag list-->
             <h4>Category</h4>
             <div class="list-group">

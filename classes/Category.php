@@ -11,6 +11,7 @@ Class Category {
     public $name;
     public $activate;
 
+    private static $currentCategory;
     private static $connection;
 
     /**
@@ -112,6 +113,27 @@ Class Category {
             array_push($categories, new Category($category_arr));
         }
         return $categories;
+    }
+
+    /**
+     * Return current category
+     *
+     * @return mixed
+     */
+    public static function current() {
+        self::checkConnection();
+        if(isset($_GET['_category'])) {
+            $category_id = $_GET['_category'];
+            settype($category_id, 'integer');
+            $sql = sprintf("SELECT * FROM category WHERE id = %d", $category_id);
+            $results = self::$connection->execute($sql);
+            if (count($results) != 0) {
+                return new Category($results[0]);
+            } else {
+                return null;
+            }
+        }
+        return null;
     }
 
 }
