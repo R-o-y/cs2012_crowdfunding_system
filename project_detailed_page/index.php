@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <head>
+    <?php include 'connect.php';?>
+    
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel='shortcut icon' href="icon.png" type='image/x-icon'/ > 
-	<title>Project name</title>
+	<title>
+    <?php
+        echo $project_title;
+    ?>   
+    </title>
 
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
@@ -21,6 +27,7 @@
 </head>
 
 <body>
+
 	<!--header-->
 	<header class="header" style="margin: 0 8%">
         <img src="logo.jpg" style="width: 18%; margin-left: 38px;">
@@ -68,11 +75,26 @@
 				<div class="content col-md-8 col-sm-12 col-xs-12">
 					<div class="section-block">
 						<div class="funding-meta">
-							<h4>project #1234:</h4>
-                            <h1>LAUNCH INTO SUCCESS</h1>
+                            <?php
+                                echo "<h4>PROJECT #", $project_id, ":</h4>";
+                                echo "<h1>", $project_title, "</h1>";
+                            ?>
                             <p>subtitle: there is some more information about the project</p><hr>
-							<span class="type-meta"><i class="fa fa-user"></i><b>Jonathan Doe</b></span><br>
-							<span class="type-meta"><i class="fa fa-tag"></i><b><a href="#">crowdfunding</a>, <a href="#">launch</a></b></span>
+							<span class="type-meta"><i class="fa fa-user"></i><b>
+                                <?php
+                                    echo $owner;
+                                ?>
+                            </b></span><br>
+							<span class="type-meta"><i class="fa fa-tag"></i><b>
+                                <?php
+                                    foreach ($categories as $row) {
+                                        if ($row['category'] == end($categories)['category'])
+                                            echo '<a href="#">', $row['category'], '</a>';
+                                        else
+                                            echo '<a href="#">', $row['category'], '</a>, ';
+                                    }
+                                ?>
+                            </b></span>
 							<img src="http://www.edisonawards.com/news/wp-content/uploads/2016/01/chi-carol-sente-crowdfunding-1871-20150302.jpg" class="img-responsive" alt="launch HTML5 Crowdfunding">
 
 							<h2>$10,350</h2>							
@@ -103,17 +125,15 @@
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane active" id="about">
 								<div class="about-information">
-									<h1 class="section-title">ABOUT LAUNCH</h1>
-
-									<p>Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.</p>
-									<p>Quisque fermentum blandit ex at commodo. Nulla facilisi. Pellentesque porttitor nisi tellus, at gravida mi interdum et. Nulla vestibulum imperdiet libero eget mattis. Vestibulum porttitor, nibh quis sagittis tincidunt, velit orci molestie magna, in congue tortor mauris sit amet eros. Nam dictum gravida tempus.</p>
+									<h1 class="section-title">
+                                        <?php
+                                            echo "ABOUT ", $project_title;
+                                        ?>
+                                    </h1>
                                     <p>
-                                        Set up Git repo<br>
-                                        Decide Server side Language [PHP]<br>
-                                        Decide Client side Language[HTML][JS]<br>
-                                        Decide main features of the product<br>
-                                        Decide database schema (Xiao Pu)<br>
-                                        The registration of timeslots for week 6 pre-alpha demo<br>
+                                        <?php
+                                            echo "<p>", nl2br($project_description), "</p>";
+                                        ?>
                                     </p>
 								</div>
 							</div>
@@ -196,10 +216,10 @@
 		</div>
 	</footer>
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

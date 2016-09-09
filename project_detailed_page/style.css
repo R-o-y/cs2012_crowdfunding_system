@@ -104,7 +104,7 @@ a {
 	color: #878787;
 	border-radius: 4px;
 	display: table;
-	padding-left: 8px;
+	padding-left: 8px 0;
 	font-size: 18px;
 	font-weight: 600;
 }
@@ -113,7 +113,7 @@ a {
 	color: #878787;
 	border-radius: 4px;
 	display: table;
-	padding: 10px;
+	padding: 10px 0;
 	font-size: 24px;
 	font-weight:800;
 }
