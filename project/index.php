@@ -88,25 +88,55 @@
 							<span class="type-meta"><i class="fa fa-tag"></i><b>
                                 <?php
                                     foreach ($categories as $row) {
-                                        if ($row['category'] == end($categories)['category'])
-                                            echo '<a href="#">', $row['category'], '</a>';
+                                        if ($row['name'] == end($categories)['name'])
+                                            echo '<a href="#">', $row['name'], '</a>';
                                         else
-                                            echo '<a href="#">', $row['category'], '</a>, ';
+                                            echo '<a href="#">', $row['name'], '</a>, ';
                                     }
                                 ?>
                             </b></span>
-							<img src="http://www.edisonawards.com/news/wp-content/uploads/2016/01/chi-carol-sente-crowdfunding-1871-20150302.jpg" class="img-responsive" alt="launch HTML5 Crowdfunding">
+							<img src="logo.jpg" class="img-responsive" alt="launch HTML5 Crowdfunding">
 
-							<h2>$10,350</h2>							
-							<span class="contribution">raised by <strong>5,234</strong> ready to launch</span>
+							<h2>
+                            <?php echo $donation_sum; ?>
+                            </h2>							
+							<span class="contribution">raised by <strong>
+                            <?php
+                                echo $donator_count;
+                            ?>                     
+                            </strong> donators</span>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-									<span class="sr-only">45% Complete</span>
-								</div>
+                                <?php
+                                echo '
+								<div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:' . $percent . '%;">
+									<span class="sr-only">' . $percent . '% Complete</span>
+								</div>'
+                                ?>
 							</div>
-							<span class="goal-progress"><strong>45%</strong> of $23,000 raised</span>
+							<span class="goal-progress"><strong>
+                            <?php echo $percent; ?>
+                            %</strong> of 
+                            <?php echo $project_goal, " "; ?>
+                            raised</span>
+                            <hr>
+                            <span class="goal-progress">
+                            Started at 
+                            <strong><?php
+                                echo $project_start_date->format('Y-m-d') . "\n";
+                            ?></strong>              
+                             | 
+                            End at
+                            <strong><?php
+                                echo $project_end_date->format('Y-m-d') . "\n";
+                            ?></strong>
+                            </span>
 						</div>
-						<span class="count-down"><strong>27</strong>Days to go.</span>
+
+						<span class="count-down"><strong>
+                        <?php
+                            echo $days_left->format('%r%a days');
+                        ?>                  
+                        </strong>Days to go.</span>
 						<a href="#" class="btn btn-launch">CLICK TO FUND</a>
 					</div>
 
@@ -115,7 +145,7 @@
 						<div class="section-tabs">
 							<ul class="nav nav-tabs" role="tablist">
 								<li role="presentation" class="active"><a href="#about" aria-controls="about" role="tab" data-toggle="tab">About</a></li>
-								<li role="presentation"><a href="#updates" aria-controls="updates" role="tab" data-toggle="tab">Updates</a></li>
+								<li role="presentation"><a href="#updates" aria-controls="updates" role="tab" data-toggle="tab">All Funds</a></li>
 							</ul>
 						</div>
 					</div>
@@ -167,29 +197,23 @@
 				<!--sidebar-->
 				<div class="content col-md-4 col-sm-12 col-xs-12">
 					<div class="section-block">
-						<h1 class="section-title">Fund History</h1>
+						<h1 class="section-title">Highlighted Funds</h1>
 						<!--reward blocks-->
-						<div class="reward-block">
-							<h3>$10</h3>
-							<h2>Early Bird</h2>
-							<p>Curabitur accumsan sem sed velit ultrices fermentum. Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id vestibulum eros. Nullam nunc velit, viverra sed consequat ac, pulvinar in metus.</p>
-                            <span class="type-meta"><i class="fa fa-user"></i><b>Jonathan Doe</b></span>
-                            <span class="type-meta" style="float: rigth"><i class="fa fa-calendar-o"></i><b>2016-9-4</b></span>
-						</div>
-						<div class="reward-block">
-							<h3>$20</h3>
-							<h2>Value Bird</h2>
-							<p>Curabitur accumsan sem sed velit ultrices fermentum. Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id vestibulum eros. Nullam nunc velit, viverra sed consequat ac, pulvinar in metus.</p>
-                            <span class="type-meta"><i class="fa fa-user"></i><b>Jonathan Doe</b></span>
-                            <span class="type-meta"><i class="fa fa-calendar-o"></i><b>2016-9-4</b></span>
-						</div>
-						<div class="reward-block last">
-							<h3>$50</h3>
-							<h2>Premium Bird</h2>
-							<p>Curabitur accumsan sem sed velit ultrices fermentum. Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id vestibulum eros. Nullam nunc velit, viverra sed consequat ac, pulvinar in metus.</p>
-                            <span class="type-meta"><i class="fa fa-user"></i><b>Jonathan Doe</b></span>
-                            <span class="type-meta"><i class="fa fa-calendar-o"></i><b>2016-9-4</b></span>
-						</div>
+                        <?php
+                        $i = 1;
+                        foreach ($donations as $donation) {
+                            if ($i > 8) break;
+                            echo 
+                            '<div class="reward-block last">
+                                <h3>' . $donation['amount'] . '</h3>
+                                <h2>Premium Bird</h2>
+                                <p>' . $donation['message'] . '</p>
+                                <span class="type-meta"><i class="fa fa-user"></i><b>'.$donation['name'].'</b></span>
+                                <span class="type-meta"><i class="fa fa-calendar-o"></i><b>'.$donation['created'].'</b></span>
+                            </div>';
+                            $i = $i + 1;
+                        }
+                        ?>
                         <div class="reward-block last">
                             <h3>$50</h3>
                             <h2>Premium Bird</h2>
