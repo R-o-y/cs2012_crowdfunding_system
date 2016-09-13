@@ -7,9 +7,9 @@ require('classes/Category.php');
 $gb_connection = new Database();
 
 // simple router
-$page = isset($_GET['_page']) ? isset($_GET['_page']) : 'home';
+$page = isset($_GET['_page']) ? $_GET['_page'] : 'home';
 
-if (file_exists('pages/' . $page)) {
+if (file_exists('pages/' . $page . '.php')) {
     require('pages/' . $page . '.php');
 } else {
     require('pages/home.php');

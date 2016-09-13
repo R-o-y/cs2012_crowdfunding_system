@@ -1,14 +1,3 @@
-body {
-	background-color: #ECEBEB;
-	font-family: 'Open Sans', sans-serif;
-}
-p {
-	color:#8A8A8A;
-}
-a { 
-	color:#8A8A8A;
-}
-
 /*-Header-*/
 .header {
 	background-color: #ffffff;
@@ -100,7 +89,6 @@ a {
 /*-Funding Meta-*/
 .funding-meta {}
 .funding-meta h4 {
-	/*background: #fff;*/
 	color: #878787;
 	border-radius: 4px;
 	display: table;
@@ -109,19 +97,11 @@ a {
 	font-weight: 600;
 }
 .funding-meta h1 {
-	/*background: #fff;*/
-	color: #878787;
 	border-radius: 4px;
 	display: table;
 	padding: 10px 0;
 	font-size: 24px;
 	font-weight:800;
-}
-.type-meta {
-	color:#8A8A8A;
-	font-size: 12px;
-	display: inline-block;
-	margin: 0px 10px 10px 0px;
 }
 .type-meta i.fa {
 	color:#878787;
@@ -136,10 +116,6 @@ a {
 }
 .funding-meta h2, .funding-meta span.contribution {
 	display:inline-block;
-	color: #878787;
-}
-.funding-meta span.contribution, .funding-meta span.goal-progress {
-	color: #A7A7A7;
 }
 .funding-meta span.goal-progress {
 	text-align:right;
@@ -153,16 +129,6 @@ a {
 }
 .count-down strong {
 	padding-right:5px;
-}
-.progress-bar {
-	background-color: #878787;
-	box-shadow:none;
-}
-.progress {
-	height: 30px;
-	background-color: #ECEBEB;
-	box-shadow:none;
-	margin: 10px 0px 10px 0px;
 }
 
 /*-Rewards-*/

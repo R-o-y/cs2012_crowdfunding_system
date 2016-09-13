@@ -51,7 +51,7 @@ class Project {
         $this->title = $project_arr['title'];
         $this->description = $project_arr['description'];
         $this->goal = $project_arr['goal'];
-        $this->start_date = $project_arr['start_date'];
+        $this->start_date = new DateTime($project_arr['start_date']);
         $this->duration = $project_arr['duration'];
         $this->owner_id = $project_arr['owner_id'];
     }
@@ -68,6 +68,13 @@ class Project {
             array_push($categories, new Category($category_arr));
         }
         return $categories;
+    }
+
+    /**
+     * Get owner of this project
+     */
+    public function getOwner() {
+
     }
 
     /**
@@ -101,6 +108,21 @@ class Project {
             array_push($projects, new Project($project_arr));
         }
         return $projects;
+    }
+
+    /**
+     * Get a specific project by id
+     */
+    public static function getProjectById($id) {
+        self::checkConnection();
+        settype($id, 'integer');
+        $sql = sprintf("SELECT * FROM project WHERE id = %d", $id);
+        $results = self::$connection->execute($sql);
+        if (count($results)) {
+            return new Project($results[0]);
+        } else {
+            return null;
+        }
     }
 
 }

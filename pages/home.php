@@ -119,7 +119,7 @@
                             <!--more detail-->
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a class="btn btn-default btn-block" href="#" role="button">More..</a>
+                                    <a class="btn btn-default btn-block" href="<?php echo url(['_page' => 'project_detail', 'project_id' => $project->id]); ?>" role="button">More..</a>
                                 </div>
                             </div>
                         </div>
