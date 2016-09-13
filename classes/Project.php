@@ -122,7 +122,7 @@ class Project {
      * @return array
      */
     public function getHighlightDonations() {
-        $sql = sprintf("SELECT * FROM donation WHERE project_id = %d ORDER BY amount LIMIT 5;", $this->id);
+        $sql = sprintf("SELECT * FROM donation WHERE project_id = %d ORDER BY amount DESC LIMIT 5;", $this->id);
         $donations = array();
         $results = self::$connection->execute($sql);
         foreach ($results as $donation_arr) {
