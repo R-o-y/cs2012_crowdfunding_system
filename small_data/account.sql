@@ -1,0 +1,10 @@
+insert into account (id, name, email, password, is_admin) values (1, 'Jerry Wood', 'jwood0@ucla.edu', 'ApBJseG', false);
+insert into account (id, name, email, password, is_admin) values (2, 'Robin Perkins', 'rperkins1@canalblog.com', 'CMnKprSr', true);
+insert into account (id, name, email, password, is_admin) values (3, 'Bonnie Thompson', 'bthompson2@examiner.com', 'mND0F2ArlBYB', true);
+insert into account (id, name, email, password, is_admin) values (4, 'Lawrence Olson', 'lolson3@ca.gov', 'm10LW0dS8m', true);
+insert into account (id, name, email, password, is_admin) values (5, 'Bruce Hanson', 'bhanson4@dailymotion.com', 'R3kMbtlNv1', true);
+insert into account (id, name, email, password, is_admin) values (6, 'Martha Wheeler', 'mwheeler5@google.com.au', '46sVoGJC8U', true);
+insert into account (id, name, email, password, is_admin) values (7, 'Kelly Cunningham', 'kcunningham6@etsy.com', '9QU6Psqsopma', true);
+insert into account (id, name, email, password, is_admin) values (8, 'Alan Stevens', 'astevens7@lulu.com', 'fC6gTUW', true);
+insert into account (id, name, email, password, is_admin) values (9, 'Matthew Chapman', 'mchapman8@joomla.org', 'JIeHtmUTLMlR', true);
+insert into account (id, name, email, password, is_admin) values (10, 'Philip Day', 'pday9@flavors.me', 'ff3E2vZ', true);
