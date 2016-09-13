@@ -94,15 +94,15 @@
                                     <div class="alert alert-info" role="alert">
                                         <div class="row">
                                             <div class="col-xs-6 col-md-3 text-center">
-                                                <strong><?php echo $project->goal; ?></strong>
+                                                <strong>S$ <?php echo $project->goal; ?></strong>
                                                 <div>total goal</div>
                                             </div>
                                             <div class="col-xs-6 col-md-3 text-center">
-                                                <strong>$2000</strong>
+                                                <strong>S$ <?php echo $project->goal - $project->getRaisedAmount();?></strong>
                                                 <div>remaining</div>
                                             </div>
                                             <div class="col-xs-6 col-md-3 text-center">
-                                                <strong>24564</strong>
+                                                <strong><?php echo $project->getNumOfDonator();?></strong>
                                                 <div>donors</div>
                                             </div>
                                             <div class="col-xs-6 col-md-3 text-center">

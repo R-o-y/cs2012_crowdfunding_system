@@ -74,7 +74,72 @@ class Project {
      * Get owner of this project
      */
     public function getOwner() {
+        // no need to check whether exist because of database constrain
+        return User::getUserById($this->owner_id);
+    }
 
+    /**
+     * Get number of donators
+     *
+     * @return mixed
+     */
+    public function getNumOfDonation() {
+        $sql = sprintf("SELECT COUNT(*) AS num_donator FROM donation WHERE project_id = %d;", $this->id);
+        $results = self::$connection->execute($sql);
+        return $results[0]["num_donator"];
+    }
+
+
+    /**
+     * Get number of distict donator
+     *
+     * @return mixed
+     */
+    public function getNumOfDonator() {
+        $sql = sprintf("SELECT COUNT(DISTINCT user_id) AS num_donator FROM donation WHERE project_id = %d;", $this->id);
+        $results = self::$connection->execute($sql);
+        return $results[0]["num_donator"];
+    }
+
+    /**
+     * Get all donations of the project
+     *
+     * @return array
+     */
+    public function getDonations() {
+        $sql = sprintf("SELECT * FROM donation WHERE project_id = %d;", $this->id);
+        $donations = array();
+        $results = self::$connection->execute($sql);
+        foreach ($results as $donation_arr) {
+            array_push($donations, new Donation($donation_arr));
+        }
+        return $donations;
+    }
+
+    /**
+     * Get highlight donations
+     *
+     * @return array
+     */
+    public function getHighlightDonations() {
+        $sql = sprintf("SELECT * FROM donation WHERE project_id = %d ORDER BY amount LIMIT 5;", $this->id);
+        $donations = array();
+        $results = self::$connection->execute($sql);
+        foreach ($results as $donation_arr) {
+            array_push($donations, new Donation($donation_arr));
+        }
+        return $donations;
+    }
+
+    /**
+     * Get total raised amount
+     *
+     * @return mixed
+     */
+    public function getRaisedAmount() {
+        $sql = sprintf("SELECT SUM(amount) AS total_amount FROM donation WHERE project_id = %d;", $this->id);
+        $results = self::$connection->execute($sql);
+        return $results[0]["total_amount"];
     }
 
     /**
@@ -118,7 +183,7 @@ class Project {
         settype($id, 'integer');
         $sql = sprintf("SELECT * FROM project WHERE id = %d", $id);
         $results = self::$connection->execute($sql);
-        if (count($results)) {
+        if (count($results) >= 1) {
             return new Project($results[0]);
         } else {
             return null;

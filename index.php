@@ -4,6 +4,8 @@ require('functions/helpers.php');
 require('classes/Database.php');
 require('classes/Project.php');
 require('classes/Category.php');
+require('classes/Donation.php');
+require('classes/User.php');
 $gb_connection = new Database();
 
 // simple router

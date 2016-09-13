@@ -12,11 +12,11 @@ $project = Project::getProjectById($_GET['project_id']);
     <?php
     if ($project) {
         ?>
-        <title>Project detail - Cannot find the project in database</title>
+        <title>Project - <?php echo $project->title; ?></title>
         <?php
     } else {
         ?>
-        <title>Project - <?php echo $project->title; ?></title>
+        <title>Project detail - Cannot find the project in database</title>
         <?php
     }
     ?>
@@ -52,13 +52,10 @@ $project = Project::getProjectById($_GET['project_id']);
                 <div class="funding-meta">
                     <h4>PROJECT #<?php echo $project->id;?>:</h4>
                     <h1><?php echo $project->title;?></h1>
-                    <p>subtitle: there is some more information about the project</p>
                     <hr>
                     <div class="type-meta">
                         <i class="fa fa-user"></i>
-                        <b>
-                        Xiao Pu
-                        </b>
+                        Created by <b><?php echo $project->getOwner()->name; ?></b>, Email <b><?php echo $project->getOwner()->email;?></b>
                     </div>
                     <br>
                     <div class="type-meta"><i class="fa fa-tag"></i><b>
@@ -76,19 +73,24 @@ $project = Project::getProjectById($_GET['project_id']);
                     </b></div>
 
 
+                    <?php
+                        $raised = $project->getRaisedAmount();
+                        $percent = sprintf("%.2f", $raised / $project->goal) * 100;
+                    ?>
+
                     <h2>
-                        S$12322422
+                        S$<?php echo $raised; ?>
                     </h2>
                     <span class="contribution">raised by <strong>
-                        13454
+                        <?php echo $project->getNumOfDonator(); ?>
                     </strong> donators</span>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                            60%
+                        <div class="progress-bar" role="progressbar" style="width: <?php echo $percent;?>%;">
+                            <?php echo $percent;?>%
                         </div>
                     </div>
                     <span class="goal-progress"><strong>
-                            3%</strong> of raised</span>
+                            <?php echo $percent;?>%</strong> of raised</span>
                     <hr>
                     <span class="goal-progress">
                     Started at
@@ -132,7 +134,7 @@ $project = Project::getProjectById($_GET['project_id']);
                     <div role="tabpanel" class="tab-pane active" id="about">
                         <div class="about-information">
                             <h1 class="section-title">
-                                ABOUT <?php echo $project->title; ?>
+                                <?php echo $project->title; ?>
                             </h1>
                             <p>
                                 <?php
@@ -143,24 +145,26 @@ $project = Project::getProjectById($_GET['project_id']);
                     </div>
                     <div role="tabpanel" class="tab-pane" id="updates">
                         <div class="update-information">
-                            <h1 class="section-title">UPDATES</h1>
-                            <!--update items-->
-                            <div class="update-post">
-                                <h4 class="update-title">We've started shipping!</h4>
-                                <span class="update-date">Posted 2 days ago</span>
-                                <p>Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.</p>
-                            </div>
-                            <div class="update-post">
-                                <h4 class="update-title">Launch begins manufacturing </h4>
-                                <span class="update-date">Posted 9 days ago</span>
-                                <p>Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.</p>
-                            </div>
-                            <div class="update-post">
-                                <h4 class="update-title">Designs have now been finalized</h4>
-                                <span class="update-date">Posted 17 days ago</span>
-                                <p>Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.</p>
-                            </div>
-                            <!--/update items-->
+                            <h1 class="section-title">All Fund</h1>
+                            <?php
+                            foreach ($project->getDonations() as $donation) {
+                                ?>
+                                <div class="update-post">
+                                    <h4 class="update-title">Amount : <b>S$ <?php echo $donation->amount; ?></b> by <b><?php echo $donation->getOnwer()->name; ?></b></h4>
+                                    <span class="update-date">
+                                        <?php
+                                            echo $donation->created->format('d/m/Y H:i:s');
+                                        ?>
+                                    </span>
+                                    <p>
+                                        <?php
+                                            echo $donation->message;
+                                        ?>
+                                    </p>
+                                </div>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -172,29 +176,28 @@ $project = Project::getProjectById($_GET['project_id']);
         <div class="content col-md-4 col-sm-12 col-xs-12">
             <div class="section-block">
                 <h1 class="section-title">Highlighted Funds</h1>
-                <!--reward blocks-->
-<!--                        --><?php
-//                        $i = 1;
-//                        foreach ($donations as $donation) {
-//                            if ($i > 8) break;
-//                            echo
-//                                '<div class="reward-block last">
-//                                <h3>' . $donation['amount'] . '</h3>
-//                                <h2>Premium Bird</h2>
-//                                <p>' . $donation['message'] . '</p>
-//                                <span class="type-meta"><i class="fa fa-user"></i><b>'.$donation['name'].'</b></span>
-//                                <span class="type-meta"><i class="fa fa-calendar-o"></i><b>'.$donation['created'].'</b></span>
-//                            </div>';
-//                            $i = $i + 1;
-//                        }
-//                        ?>
-                <div class="reward-block last">
-                    <h3>$50</h3>
-                    <h2>Premium Bird</h2>
-                    <p>Curabitur accumsan sem sed velit ultrices fermentum. Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id vestibulum eros. Nullam nunc velit, viverra sed consequat ac, pulvinar in metus.</p>
-                    <span class="type-meta"><i class="fa fa-user"></i><b>Jonathan Doe</b></span>
-                    <span class="type-meta"><i class="fa fa-calendar-o"></i><b>2016-9-4</b></span>
-                </div>
+                <?php
+                foreach ($project->getHighlightDonations() as $donation) {
+                    ?>
+                    <div class="reward-block last">
+                        <h3>S$ <?php echo $donation->amount; ?></h3>
+                        <h2>#<?php echo $donation->id; ?></h2>
+                        <p>
+                            <?php echo $donation->message; ?>
+                        </p>
+                        <span class="type-meta"><i class="fa fa-user"></i><b><?php echo $donation->getOnwer()->name; ?></b></span>
+                        <span class="type-meta"><i class="fa fa-calendar-o"></i>
+                            <b>
+                                <?php
+                                    echo $donation->created->format('d/m/Y H:i:s');
+                                ?>
+                            </b>
+                        </span>
+                    </div>
+                    <br>
+                    <?php
+                }
+                ?>
                 <!--/reward blocks-->
             </div>
         </div>
