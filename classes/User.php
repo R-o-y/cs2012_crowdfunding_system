@@ -73,7 +73,7 @@ class User {
     public static function getUserById($id) {
         self::checkConnection();
         settype($id, 'integer');
-        $sql = sprintf("SELECT * FROM account WHERE id = %d", $id);
+        $sql = sprintf("SELECT * FROM account WHERE id = %d;", $id);
         $results = self::$connection->execute($sql);
         if (count($results) >= 1) {
             return new User($results[0]);
@@ -81,5 +81,35 @@ class User {
             return null;
         }
     }
-	
+    public static function getUserByEmail($email) {
+        self::checkConnection();
+        $sql = sprintf("SELECT * FROM account WHERE email = '%s';", $email);
+        $results = self::$connection->execute($sql);
+        if (count($results) >= 1) {
+            return new User($results[0]);
+        } else {
+            return null;
+        }
+    }   
+	public static function checkValidity($email, $password) {
+        self::checkConnection();
+        $sql = sprintf("SELECT * FROM account WHERE email = '%s' AND password = '%s';", $email, $password);
+        $results = self::$connection->execute($sql);
+        if (count($results) == 1) {
+            return new User($results[0]);
+        } else {
+            return null;
+        }
+    }
+    public function getName() {
+        $sql = sprintf("SELECT name FROM account WHERE email = '%s';", $this->email);
+        $results = self::$connection->execute($sql);
+        return $results[0]["name"];
+    }
+    public function setPass($pass) {
+        $this->pass = $pass;
+        $sql = sprintf("UPDATE account SET password = '%s' WHERE id = %d;", $this->pass, $this->id);
+        $results = self::$connection->execute($sql);
+        return true;
+    }
 }
