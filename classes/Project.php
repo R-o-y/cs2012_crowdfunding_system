@@ -21,8 +21,10 @@ class Project {
      *
      * @param null $db_connection
      */
-    public function Project($project_arr) {
-        $this->validateAndSetData($project_arr);
+    public function Project($project_arr=null) {
+        if ($project_arr!=null) {
+            $this->validateAndSetData($project_arr);
+        }
     }
 
     public function validateAndSetData($project_arr) {
@@ -139,7 +141,40 @@ class Project {
     public function getRaisedAmount() {
         $sql = sprintf("SELECT SUM(amount) AS total_amount FROM donation WHERE project_id = %d;", $this->id);
         $results = self::$connection->execute($sql);
-        return $results[0]["total_amount"];
+        $total_amount = $results[0]["total_amount"];
+        return $total_amount ? $total_amount : 0;
+    }
+
+    /**
+     * save field in database
+     *
+     */
+    public function save() {
+        if (self::getProjectById($this->id) == null) {
+            // should create
+            $sql = "INSERT INTO project (title, description, goal, start_date, duration, owner_id) VALUES ('%s', '%s', %d, '%s', %d, %d) RETURNING id;";
+            $auth_user = User::getUserById(1);
+            $sql = sprintf($sql, addslashes($this->title), addslashes($this->description), $this->goal, $this->start_date->format('Y-m-d'), $this->duration, $auth_user->id);
+            $results = self::$connection->execute($sql);
+            $this->id = $results[0]["id"];
+        } else {
+            // should update
+            $sql = "UPDATE project SET title='%s', description='%s', goal=%d, start_date='%s', duration=%d, owner_id=%d WHERE id=%d";
+            $auth_user = User::getUserById(1);
+            $sql = sprintf($sql, addslashes($this->title), addslashes($this->description), $this->goal, $this->start_date->format('Y-m-d'), $this->duration, $auth_user->id, $this->id);
+            self::$connection->execute($sql);
+        }
+    }
+
+    /**
+     * Update the object with array
+     *
+     * @param $arr
+     */
+    public function update($arr) {
+        foreach ($arr as $key => $value) {
+            $this->{$key} = $value;
+        }
     }
 
     /**
@@ -189,5 +224,117 @@ class Project {
             return null;
         }
     }
+
+    /**
+     * Check whether the request is to create project
+     */
+    public static function checkCreateRequest() {
+        self::checkConnection();
+        $data = self::validateCreateRequest();
+        $project = new Project();
+        if ($data != null) {
+            $project->update($data);
+            $project->save();
+            redirect(url(['_page' => 'project_detail', 'project_id' => $project->id]));
+        }
+    }
+
+    /**
+     * Validate create request data
+     *
+     * @return array|null
+     */
+    public static function validateCreateRequest() {
+        $errors = array();
+        $data = array();
+        self::checkTitle($errors, $data);
+        self::checkDescription($errors, $data);
+        self::checkGoal($errors, $data);
+        self::checkStartDate($errors, $data);
+        self::checkDuration($errors, $data);
+        if (count($errors) > 0 && count($data) > 0) {
+            redirect(url(['_page' => 'create_project']));
+        } else if (count($errors) == 0){
+            return $data;
+        }
+        return null;
+    }
+
+    /**
+     * Check whether the request is to update
+     */
+    public static function checkUpdateRequest() {
+        self::checkConnection();
+        $data = self::validateUpdateRequest();
+        if ($data != null) {
+            $project = self::getProjectById($data['id']);
+            $project->update($data);
+            $project->save();
+            redirect(url(['_page' => 'project_detail', 'project_id' => $data['id']]));
+        }
+    }
+
+    /**
+     * Validate post data
+     */
+    private static function validateUpdateRequest() {
+        $errors = array();
+        $data = array();
+        self::checkID($errors, $data);
+        self::checkTitle($errors, $data);
+        self::checkDescription($errors, $data);
+        self::checkGoal($errors, $data);
+        self::checkStartDate($errors, $data);
+        self::checkDuration($errors, $data);
+        if (count($errors) > 0 && count($data) > 0) {
+            redirect(url(['_page' => 'home']));
+        } else if (count($errors) == 0){
+            return $data;
+        }
+        return null;
+    }
+    private static function checkID(&$errors, &$data) {
+        if (isset($_POST['project_id']) && $_POST['project_id'] != "") {
+            $data['id'] = $_POST['project_id'];
+        } else {
+            $errors['project_id'] = 'Cannot identify project id';
+        }
+    }
+    private static function checkTitle(&$errors, &$data) {
+        if (isset($_POST['project_title']) && $_POST['project_title'] != "") {
+            $data['title'] = $_POST['project_title'];
+        } else {
+            $errors['project_title'] = 'Title required';
+        }
+    }
+    private static function checkDescription(&$errors, &$data) {
+        if (isset($_POST['project_description']) && $_POST['project_description'] != "") {
+            $data['description'] = $_POST['project_description'];
+        } else {
+            $errors['project_description'] = 'Description required';
+        }
+    }
+    private static function checkGoal(&$errors, &$data) {
+        if (isset($_POST['project_goal']) && $_POST['project_goal'] != "") {
+            $data['goal'] = $_POST['project_goal'];
+        } else {
+            $errors['project_goal'] = 'Goal required';
+        }
+    }
+    private static function checkStartDate(&$errors, &$data) {
+        if (isset($_POST['project_start_date']) && $_POST['project_start_date'] != "") {
+            $data['start_date'] = (new DateTime())->setTimestamp(strtotime($_POST['project_start_date']));
+        } else {
+            $errors['project_start_date'] = 'Start date required';
+        }
+    }
+    private static function checkDuration(&$errors, &$data) {
+        if (isset($_POST['project_duration']) && $_POST['project_duration'] != "") {
+            $data['duration'] = $_POST['project_duration'];
+        } else {
+            $errors['project_duration'] = 'Duration required';
+        }
+    }
+
 
 }

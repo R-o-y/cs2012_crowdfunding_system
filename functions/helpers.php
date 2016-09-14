@@ -13,3 +13,12 @@ function url($arr) {
     }
     return $str;
 }
+
+/**
+ * Helper function to redirect
+ *
+ * @param $url
+ */
+function redirect($url) {
+    header('Location: ' . $url);
+}

@@ -39,6 +39,9 @@
                     </ul>
                 </li>
             </ul>
+            <form class="navbar-form navbar-right">
+                <button type="button" class="btn btn-primary" onclick="window.location.replace('<?php echo url(['_page' => 'create_project']);?>')">Create Project</button>
+            </form>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

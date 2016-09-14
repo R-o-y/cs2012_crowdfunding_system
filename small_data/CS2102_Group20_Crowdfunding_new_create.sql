@@ -1,10 +1,10 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2016-09-09 11:17:08.326
+-- Last modification date: 2016-09-14 09:55:04.916
 
 -- tables
 -- Table: account
 CREATE TABLE account (
-    id int  NOT NULL,
+    id serial  NOT NULL,
     name varchar(255)  NOT NULL,
     email varchar(255)  NOT NULL,
     password varchar(255)  NOT NULL,
@@ -15,14 +15,14 @@ CREATE TABLE account (
 
 -- Table: category
 CREATE TABLE category (
-    id int  NOT NULL,
+    id serial  NOT NULL,
     name varchar(30)  NOT NULL,
     CONSTRAINT category_pk PRIMARY KEY (id)
 );
 
 -- Table: donation
 CREATE TABLE donation (
-    id bigint  NOT NULL,
+    id serial  NOT NULL,
     user_id int  NOT NULL,
     project_id int  NOT NULL,
     message text  NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE donation (
 
 -- Table: project
 CREATE TABLE project (
-    id int  NOT NULL,
+    id serial  NOT NULL,
     title varchar(80)  NOT NULL,
     description text  NOT NULL,
     goal decimal  NOT NULL,

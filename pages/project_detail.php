@@ -50,7 +50,7 @@ $project = Project::getProjectById($_GET['project_id']);
         <div class="content col-md-8 col-sm-12 col-xs-12">
             <div class="section-block">
                 <div class="funding-meta">
-                    <h4>PROJECT #<?php echo $project->id;?>:</h4>
+                    <h4>PROJECT #<?php echo $project->id;?>: <a class="btn btn-danger" href="<?php echo url(['_page' => 'edit_project', 'project_id' => $project->id]);?>">Edit</a> </h4>
                     <h1><?php echo $project->title;?></h1>
                     <hr>
                     <div class="type-meta">
