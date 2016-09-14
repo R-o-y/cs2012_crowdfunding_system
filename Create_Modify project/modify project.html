@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel='shortcut icon' href="icon.png" type='image/x-icon'/ > 
+	<title>Project name</title>
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Template CSS -->
+	<link href="style.css" rel="stylesheet">
+
+	<!--Fonts-->
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
+</head>
+
+<body>
+	<!--header-->
+	<header class="header" style="margin: 0 8%">
+        <img src="logo.png" style="width: 18%; margin-left: 38px;">
+    </header>
+    <nav class="navbar navbar-default" style="margin: 28px 8% 0 8%">
+        <!-- <img src="logo.png" style="width: 12%; float: left;"> -->
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Sign up</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome Username<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Change Password</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Sign out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+	<!--main content-->
+	<div class="main-content">
+		<div class="container">
+			<div class="row">
+				<div class="content col-md-8 col-sm-12 col-xs-12">
+					<div class="section-block">
+						<div class="funding-meta">
+							<p><h3>Modify your project with some basic information about your organization:</h3></p>
+                            <p><h4>(* indicates a required answer)</h4></p> 
+				  <!--/sidebar-->
+<form style = "font-size: 20px; font-family = verdana; padding: 6px">
+<p>*Title: <input type="text" name="title" required> </p>
+<p>*Description: <br /><textarea rows="4" name="description" cols="80" maxlength = "1000" required></textarea> </p> 
+<p>*Amount of funding sought: <input type="text" name="goal" required> </p> 
+<p>*Start date: <input type="text" name="startDate" required> </p>
+<p>*Duration: <input type="text" name="duration" required> </p>
+<p>Tags: <br />
+<input type="checkbox" name="tags" value = "war" /> War 
+<input type="checkbox" name="tags" value = "family" /> Family 
+<input type="checkbox" name="tags" value = "boy" /> Boy <br />
+<input type="checkbox" name="tags" value = "girl" /> Girl 
+<input type="checkbox" name="tags" value = "love" /> Love <br />
+</p>
+<p><input type="submit" value = "Submit"></p>
+</form>
+
+				  
+</div>
+						<!--/reward blocks-->
+					</div>
+				</div>
+				<!--/sidebar-->
+			</div>
+		</div>
+	</div>
+
+	<footer class="footer">
+	   <div class="container">
+            <div class="row" style="text-align: center; padding-bottom: 18px">
+            <span>Copyright 2016 CS2102 Group 20. All rights reserved</span>
+            <!-- <div class="row">
+				<span class="copyright">Created by <a href="http://themes.audaindesigns.com" target="_blank">Audain Designs</a> for free use</span>
+			</div> -->
+            </div>
+		</div>
+	</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) 3-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
