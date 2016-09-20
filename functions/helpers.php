@@ -7,7 +7,7 @@
  * @return url string
  */
 function url($arr) {
-    $str = "/?";
+    $str = "./?";
     foreach ($arr as $key=>$value) {
         $str = $str . "$key=$value&";
     }
