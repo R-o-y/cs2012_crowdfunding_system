@@ -1,4 +1,5 @@
 <?php
+session_start();
 date_default_timezone_set("Asia/Singapore");
 require('functions/helpers.php');
 require('classes/Database.php');

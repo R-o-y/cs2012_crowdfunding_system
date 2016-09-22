@@ -106,12 +106,23 @@ class User {
         $results = self::$connection->execute($sql);
         return $results[0]["name"];
     }
+    public function getEmail() {
+        $sql = sprintf("SELECT email FROM account WHERE email = '%s';", $this->email);
+        $results = self::$connection->execute($sql);
+        return $results[0]["email"];
+    }
     public function setPass($pass) {
         $this->pass = $pass;
         $sql = sprintf("UPDATE account SET password = '%s' WHERE id = %d;", $this->pass, $this->id);
         $results = self::$connection->execute($sql);
         return true;
     }
-
-    
+    public static function getCurrentUser() {
+        if (isset($_SESSION['email'])) {
+            $user = self::getUserByEmail($_SESSION['email']);
+            return $user;
+        } else {
+            return null;
+        }
+    }
 }

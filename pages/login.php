@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<?php
-   session_start();
-?>
 
 <html lang="en">
   <head>
@@ -43,6 +40,7 @@
               } else {           
                  $_SESSION['valid'] = true;
                  $_SESSION['timeout'] = time();
+                 $_SESSION['email'] = $user->getEmail();
                  $_SESSION['username'] = $user->getName();
                  header("Location: ./");          
                }

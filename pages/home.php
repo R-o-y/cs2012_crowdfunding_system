@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <?php
-   session_start();
+    if (User::getCurrentUser()) {
+        $user = User::getCurrentUser();
+    } else {
+        redirect('./?_page=login');
+    }
 ?>
 <html lang="en">
 <head>
