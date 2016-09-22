@@ -20,11 +20,10 @@
   <body>
   
   <div class="container">
-      <?php require('pages/_header.php'); ?>
       <ol class="breadcrumb">
           <li><a href="<?php echo url(['_page'=>'home']) ?>">Home</a></li>
           <li class="active">User Access</li>
-      </ol>
+      </ol> 
       <div class="row">
           <div class="col-md-4 col-md-offset-4" style="">
               <div class="panel panel-default">

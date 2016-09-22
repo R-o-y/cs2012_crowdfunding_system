@@ -17,7 +17,6 @@
     <![endif]-->
   </head>
   <body>
-
   <ol class="breadcrumb">
     <li><a href="<?php echo url(['_page'=>'home']) ?>">Home</a></li>
     <li class="active">User Access</li>
@@ -66,6 +65,7 @@
           </form>          
         </div>
       </div>
+      <?php require('pages/_footer.php'); ?>
       
     </div>
   </div>

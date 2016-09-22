@@ -102,14 +102,10 @@ class User {
         }
     }
     public function getName() {
-        $sql = sprintf("SELECT name FROM account WHERE email = '%s';", $this->email);
-        $results = self::$connection->execute($sql);
-        return $results[0]["name"];
+        return $this->name;
     }
     public function getEmail() {
-        $sql = sprintf("SELECT email FROM account WHERE email = '%s';", $this->email);
-        $results = self::$connection->execute($sql);
-        return $results[0]["email"];
+        return $this->email;
     }
     public function setPass($pass) {
         $this->pass = $pass;

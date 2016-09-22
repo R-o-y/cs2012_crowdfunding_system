@@ -32,7 +32,7 @@
                 <?php
                     if (!User::getCurrentUser()) {
                         ?>
-                        <li><a href="<?php echo url(['_page' => 'login']);?>">Sign up</a></li>
+                        <li><a href="<?php echo url(['_page' => 'login']);?>">Log in</a></li>
                         <?php
                     }
                 ?>
@@ -45,7 +45,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="./?_page=reset">Change Password</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="./?_page=logout">Sign out</a></li>
+                            <li><a href="./?_page=logout">Log out</a></li>
                         </ul>
                     </li>
                     <?php
