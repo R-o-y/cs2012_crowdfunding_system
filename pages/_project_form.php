@@ -37,6 +37,28 @@
                class="form-control" id="project_duration" name="project_duration" placeholder="How long should it be?">
     </div>
 </div>
+<div class="form-group">
+    <label for="project_categories" class="col-sm-2 control-label">Categories</label>
+
+    <div class="col-sm-10">
+        <select id="project_categories" name="project_categories[]" multiple="multiple">
+            <?php
+            $selected_categories = [];
+            if (isset($project)) {
+                foreach ($project->getCategories() as $category) {
+                    array_push($selected_categories, $category->id);
+                }
+            }
+            foreach (Category::getAll() as $category) {
+               ?>
+                <option value="<?php echo $category->id; ?>"
+                    <?php echo in_array($category->id, $selected_categories) ? 'selected' : '';?>><?php echo $category->name; ?></option>
+                <?php
+            }
+            ?>
+        </select>
+    </div>
+</div>
 <input type="hidden"
        value="<?php echo (isset($project)) ? $project->id : '' ?>"
        id="project_id"

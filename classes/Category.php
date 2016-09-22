@@ -54,6 +54,33 @@ Class Category {
         }
     }
 
+    /**
+     * Set a project so that it belongs to the category
+     *
+     * @param $project_id
+     */
+    public function setProject($project_id) {
+        settype($project_id, 'integer');
+        $sql = sprintf("INSERT INTO project_category (project_id, category_id) VALUES (%d, %d)", $project_id, $this->id);
+        self::$connection->execute($sql);
+    }
+
+
+    /**
+     * Get a specific Category by id
+     */
+    public static function getCategoryById($id) {
+        self::checkConnection();
+        settype($id, 'integer');
+        $sql = sprintf("SELECT * FROM category WHERE id = %d", $id);
+        $results = self::$connection->execute($sql);
+        if (count($results) >= 1) {
+            return new Category($results[0]);
+        } else {
+            return null;
+        }
+    }
+
 
     /**
      * Get number of projects that belong to the category

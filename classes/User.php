@@ -112,4 +112,6 @@ class User {
         $results = self::$connection->execute($sql);
         return true;
     }
+
+    
 }

@@ -172,9 +172,36 @@ class Project {
      * @param $arr
      */
     public function update($arr) {
+        // update attribute
         foreach ($arr as $key => $value) {
             $this->{$key} = $value;
         }
+    }
+
+    /**
+     * Update category
+     *
+     * @param $categories
+     */
+    public function updateCategory($categories) {
+        // update category
+        $this->clearCategories();
+        foreach ($categories as $category_id) {
+            $category = Category::getCategoryById($category_id);
+            if ($category) {
+                $category->setProject($this->id);
+            }
+        }
+        $arr['categories'] = null;
+    }
+
+    /**
+     * Clear all category relationship in current project
+     */
+    private function clearCategories() {
+        $sql = "DELETE FROM project_category WHERE project_id = %d";
+        $sql = sprintf($sql, $this->id);
+        self::$connection->execute($sql);
     }
 
     /**
@@ -235,6 +262,7 @@ class Project {
         if ($data != null) {
             $project->update($data);
             $project->save();
+            $project->updateCategory($data['categories']);
             redirect(url(['_page' => 'project_detail', 'project_id' => $project->id]));
         }
     }
@@ -252,6 +280,7 @@ class Project {
         self::checkGoal($errors, $data);
         self::checkStartDate($errors, $data);
         self::checkDuration($errors, $data);
+        self::checkCategories($errors, $data);
         if (count($errors) > 0 && count($data) > 0) {
             redirect(url(['_page' => 'create_project']));
         } else if (count($errors) == 0){
@@ -270,6 +299,7 @@ class Project {
             $project = self::getProjectById($data['id']);
             $project->update($data);
             $project->save();
+            $project->updateCategory($data['categories']);
             redirect(url(['_page' => 'project_detail', 'project_id' => $data['id']]));
         }
     }
@@ -286,6 +316,7 @@ class Project {
         self::checkGoal($errors, $data);
         self::checkStartDate($errors, $data);
         self::checkDuration($errors, $data);
+        self::checkCategories($errors, $data);
         if (count($errors) > 0 && count($data) > 0) {
             redirect(url(['_page' => 'home']));
         } else if (count($errors) == 0){
@@ -333,6 +364,15 @@ class Project {
             $data['duration'] = $_POST['project_duration'];
         } else {
             $errors['project_duration'] = 'Duration required';
+        }
+    }
+    private static function checkCategories(&$errors, &$data) {
+        if (isset($_POST['project_categories'])) {
+            $categories = [];
+            foreach ($_POST['project_categories'] as $project_category) {
+                array_push($categories, $project_category);
+            }
+            $data['categories'] = $categories;
         }
     }
 

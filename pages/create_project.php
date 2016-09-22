@@ -9,7 +9,7 @@ Project::checkCreateRequest();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Home Page</title>
+    <title>Create Project</title>
 
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
@@ -22,6 +22,7 @@ Project::checkCreateRequest();
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -62,9 +63,22 @@ Project::checkCreateRequest();
 
 <!--tinymce support-->
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-<script>tinymce.init({ selector:'#project_description' });</script>
+<script>tinymce.init({ 
+        selector:'#project_description',
+        plugins: 'code advlist autolink link image table media codesample fullscreen paste',
+        toolbar: ['code | undo redo | bold italic underline | blockquote codesample bullist numlist math | link image media | fullscreen',]
+    });</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
 <script>$('#project_start_date').datepicker();</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script type="text/javascript">
+    $('#project_categories').select2({
+        width : '100%',
+    });
+</script>
+
+
 </body>
 </html>
