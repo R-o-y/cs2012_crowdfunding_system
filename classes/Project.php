@@ -231,8 +231,13 @@ class Project {
         }
     }
 
+    /**
+     * Delete a project, due to the constraint in database
+     * project category relationships and donations will also be deleted
+     */
     public function delete() {
-        
+        $sql = sprintf("DELETE FROM project WHERE id=%d", $this->id);
+        self::$connection->execute($sql);
     }
 
     /**

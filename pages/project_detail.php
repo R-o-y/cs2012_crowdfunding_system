@@ -53,7 +53,11 @@ $project = Project::getProjectById($_GET['project_id']);
         <div class="content col-md-8 col-sm-12 col-xs-12">
             <div class="section-block">
                 <div class="funding-meta">
-                    <h4>PROJECT #<?php echo $project->id;?>: <a class="btn btn-danger" href="<?php echo url(['_page' => 'edit_project', 'project_id' => $project->id]);?>">Edit</a> </h4>
+                    <h4>PROJECT #<?php echo $project->id;?>: </h4>
+                    <div class="pull-right">
+                        <a class="btn btn-info" href="<?php echo url(['_page' => 'edit_project', 'project_id' => $project->id]);?>">Edit</a>
+                        <a class="btn btn-danger" href="<?php echo url(['_page' => 'delete_project', 'project_id' => $project->id]);?>">Delete</a>
+                    </div>
                     <h1 class="text-<?php echo $project->getDisplayClass();?>"><?php echo $project->title;?></h1>
                     <hr>
                     <div>
@@ -172,21 +176,28 @@ $project = Project::getProjectById($_GET['project_id']);
                         <div class="update-information">
                             <h1 class="section-title">All Fund</h1>
                             <?php
-                            foreach ($project->getDonations() as $donation) {
-                                ?>
-                                <div class="update-post">
-                                    <h4 class="update-title">Amount : <b>S$ <?php echo $donation->amount; ?></b> by <b><?php echo $donation->getOnwer()->name; ?></b></h4>
+                            $funds = $project->getDonations();
+                            if (count($funds) > 0) {
+                                foreach ($funds as $donation) {
+                                    ?>
+                                    <div class="update-post">
+                                        <h4 class="update-title">Amount : <b>S$ <?php echo $donation->amount; ?></b> by <b><?php echo $donation->getOnwer()->name; ?></b></h4>
                                     <span class="update-date">
                                         <?php
-                                            echo $donation->created->format('d/m/Y H:i:s');
+                                        echo $donation->created->format('d/m/Y H:i:s');
                                         ?>
                                     </span>
-                                    <p>
-                                        <?php
+                                        <p>
+                                            <?php
                                             echo $donation->message;
-                                        ?>
-                                    </p>
-                                </div>
+                                            ?>
+                                        </p>
+                                    </div>
+                                    <?php
+                                }
+                            } else {
+                                ?>
+                                <div class="alert alert-warning">No Donation right now! Want be <a href="#"><strong>the first</strong></a> to donate?</div>
                                 <?php
                             }
                             ?>
@@ -202,24 +213,31 @@ $project = Project::getProjectById($_GET['project_id']);
             <div class="section-block">
                 <h1 class="section-title">Highlighted Funds</h1>
                 <?php
-                foreach ($project->getHighlightDonations() as $donation) {
-                    ?>
-                    <div class="reward-block last">
-                        <h3>S$ <?php echo $donation->amount; ?></h3>
-                        <h2>#<?php echo $donation->id; ?></h2>
-                        <p>
-                            <?php echo $donation->message; ?>
-                        </p>
-                        <span class="type-meta"><i class="fa fa-user"></i><b><?php echo $donation->getOnwer()->name; ?></b></span>
+                $funds = $project->getHighlightDonations();
+                if (count($funds) > 0) {
+                    foreach ($funds as $donation) {
+                        ?>
+                        <div class="reward-block last">
+                            <h3>S$ <?php echo $donation->amount; ?></h3>
+                            <h2>#<?php echo $donation->id; ?></h2>
+                            <p>
+                                <?php echo $donation->message; ?>
+                            </p>
+                            <span class="type-meta"><i class="fa fa-user"></i><b><?php echo $donation->getOnwer()->name; ?></b></span>
                         <span class="type-meta"><i class="fa fa-calendar-o"></i>
                             <b>
                                 <?php
-                                    echo $donation->created->format('d/m/Y H:i:s');
+                                echo $donation->created->format('d/m/Y H:i:s');
                                 ?>
                             </b>
                         </span>
-                    </div>
-                    <br>
+                        </div>
+                        <br>
+                        <?php
+                    }
+                } else {
+                    ?>
+                    <div class="alert alert-warning">No Donation right now! Want be <a href="#"><strong>the first</strong></a> to donate?</div>
                     <?php
                 }
                 ?>

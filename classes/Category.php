@@ -27,6 +27,15 @@ Class Category {
     }
 
     /**
+     * Delete a category, due to the constraint in database
+     * project category relationships will also be deleted
+     */
+    public function delete() {
+        $sql = sprintf("DELETE FROM category WHERE id=%d", $this->id);
+        self::$connection->execute($sql);
+    }
+
+    /**
      * Validate data and set to instance
      *
      * @param $category_arr
@@ -65,9 +74,8 @@ Class Category {
         self::$connection->execute($sql);
     }
 
-
     /**
-     * Get a specific Category by id
+     * Get a specific category by id
      */
     public static function getCategoryById($id) {
         self::checkConnection();
