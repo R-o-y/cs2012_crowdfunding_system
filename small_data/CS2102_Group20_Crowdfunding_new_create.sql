@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2016-09-22 10:57:52.667
+-- Last modification date: 2016-09-22 12:25:11.996
 
 -- tables
 -- Table: account
@@ -75,7 +75,7 @@ ALTER TABLE project_category ADD CONSTRAINT category_project_category
 
 -- Reference: product_category_product (table: project_category)
 ALTER TABLE project_category ADD CONSTRAINT product_category_product
-    FOREIGN KEY (category_id)
+    FOREIGN KEY (project_id)
     REFERENCES project (id)
     ON DELETE  CASCADE 
     ON UPDATE  CASCADE 
