@@ -18,61 +18,63 @@
     <![endif]-->
   </head>
   <body>
-  <ol class="breadcrumb">
-    <li><a href="<?php echo url(['_page'=>'home']) ?>">Home</a></li>
-    <li class="active">User Access</li>
-  </ol>
   
   <div class="container">
-    <div class="col-md-4 col-md-offset-4" style="">
-      <div class="panel panel-default">
-        <div class="panel-heading"><h3 class="panel-title"><strong>Log In </strong></h3></div>
-        <div class="panel-body">
-          <?php
-            $msg = '';
-             if (isset($_POST['login']) && !empty($_POST['email']) 
-               && !empty($_POST['password'])) {
+      <?php require('pages/_header.php'); ?>
+      <ol class="breadcrumb">
+          <li><a href="<?php echo url(['_page'=>'home']) ?>">Home</a></li>
+          <li class="active">User Access</li>
+      </ol>
+      <div class="row">
+          <div class="col-md-4 col-md-offset-4" style="">
+              <div class="panel panel-default">
+                  <div class="panel-heading"><h3 class="panel-title"><strong>Log In </strong></h3></div>
+                  <div class="panel-body">
+                      <?php
+                      $msg = '';
+                      if (isset($_POST['login']) && !empty($_POST['email'])
+                          && !empty($_POST['password'])) {
 
-               $user = User::checkValidity($_POST['email'], $_POST['password']);
-               
-              if ($user == null) {
-                  $msg = 'Wrong email or password';
-              } else {           
-                 $_SESSION['valid'] = true;
-                 $_SESSION['timeout'] = time();
-                 $_SESSION['email'] = $user->getEmail();
-                 $_SESSION['username'] = $user->getName();
-                 header("Location: ./");          
-               }
-            }
-            
-         ?>
-          <form role="form" action = "<?php echo url(['_page'=>'login']); ?>" method = "post">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" name = "email" placeholder="Enter email" required>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password <a href="<?php echo url(['_page'=>'reset']); ?>">(forgot password)</a></label>
-              <input type="password" class="form-control" id="exampleInputPassword1" name = "password" placeholder="Password" required>
-            </div>
-            <p><span style="color:red"><?php echo $msg; ?></span></p>
-            <div class="checkbox">
-              <label>
-              <input type="checkbox" value="remember-me"> Remember me
-              </label>
-            </div>
-            <button type="submit" class="btn btn-default btn-sm" name="login">Log in</button>
-          </form>
-          
-          
+                          $user = User::checkValidity($_POST['email'], $_POST['password']);
 
-        </div>
+                          if ($user == null) {
+                              $msg = 'Wrong email or password';
+                          } else {
+                              $_SESSION['valid'] = true;
+                              $_SESSION['timeout'] = time();
+                              $_SESSION['email'] = $user->getEmail();
+                              $_SESSION['username'] = $user->getName();
+                              header("Location: ./");
+                          }
+                      }
+
+                      ?>
+                      <form role="form" action = "<?php echo url(['_page'=>'login']); ?>" method = "post">
+                          <div class="form-group">
+                              <label for="exampleInputEmail1">Email</label>
+                              <input type="email" class="form-control" id="exampleInputEmail1" name = "email" placeholder="Enter email" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="exampleInputPassword1">Password <a href="<?php echo url(['_page'=>'reset']); ?>">(forgot password)</a></label>
+                              <input type="password" class="form-control" id="exampleInputPassword1" name = "password" placeholder="Password" required>
+                          </div>
+                          <p><span style="color:red"><?php echo $msg; ?></span></p>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="remember-me"> Remember me
+                              </label>
+                          </div>
+                          <button type="submit" class="btn btn-default btn-sm" name="login">Log in</button>
+                      </form>
+
+                  </div>
+              </div>
+              <div class="bottom text-center">
+                  New here ? <a href="#"><b>Join Us</b></a>
+              </div>
+          </div>
       </div>
-      <div class="bottom text-center">
-        New here ? <a href="#"><b>Join Us</b></a>
-      </div>
-    </div>
+      <?php require('pages/_footer.php'); ?>
   </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
