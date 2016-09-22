@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2016-09-14 09:55:04.916
+-- Last modification date: 2016-09-22 10:57:52.667
 
 -- tables
 -- Table: account
@@ -66,7 +66,9 @@ SELECT category_id, COUNT(*) AS numPorject FROM project_category GROUP BY catego
 -- Reference: category_project_category (table: project_category)
 ALTER TABLE project_category ADD CONSTRAINT category_project_category
     FOREIGN KEY (category_id)
-    REFERENCES category (id)  
+    REFERENCES category (id)
+    ON DELETE  CASCADE 
+    ON UPDATE  CASCADE 
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
@@ -74,7 +76,9 @@ ALTER TABLE project_category ADD CONSTRAINT category_project_category
 -- Reference: product_category_product (table: project_category)
 ALTER TABLE project_category ADD CONSTRAINT product_category_product
     FOREIGN KEY (category_id)
-    REFERENCES project (id)  
+    REFERENCES project (id)
+    ON DELETE  CASCADE 
+    ON UPDATE  CASCADE 
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
@@ -82,7 +86,9 @@ ALTER TABLE project_category ADD CONSTRAINT product_category_product
 -- Reference: project_supporter (table: donation)
 ALTER TABLE donation ADD CONSTRAINT project_supporter
     FOREIGN KEY (project_id)
-    REFERENCES project (id)  
+    REFERENCES project (id)
+    ON DELETE  CASCADE 
+    ON UPDATE  CASCADE 
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
@@ -90,7 +96,9 @@ ALTER TABLE donation ADD CONSTRAINT project_supporter
 -- Reference: user_Session (table: session)
 ALTER TABLE session ADD CONSTRAINT user_Session
     FOREIGN KEY (user_id)
-    REFERENCES account (id)  
+    REFERENCES account (id)
+    ON DELETE  CASCADE 
+    ON UPDATE  CASCADE 
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
@@ -98,7 +106,9 @@ ALTER TABLE session ADD CONSTRAINT user_Session
 -- Reference: user_project (table: project)
 ALTER TABLE project ADD CONSTRAINT user_project
     FOREIGN KEY (owner_id)
-    REFERENCES account (id)  
+    REFERENCES account (id)
+    ON DELETE  CASCADE 
+    ON UPDATE  CASCADE 
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
@@ -106,7 +116,9 @@ ALTER TABLE project ADD CONSTRAINT user_project
 -- Reference: user_supporter (table: donation)
 ALTER TABLE donation ADD CONSTRAINT user_supporter
     FOREIGN KEY (user_id)
-    REFERENCES account (id)  
+    REFERENCES account (id)
+    ON DELETE  CASCADE 
+    ON UPDATE  CASCADE 
     NOT DEFERRABLE 
     INITIALLY IMMEDIATE
 ;
