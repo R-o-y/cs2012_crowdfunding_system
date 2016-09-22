@@ -20,10 +20,12 @@ Class Category {
      * Category constructor.
      * @param $category_arr
      */
-    public function Category($category_arr) {
-        self::checkConnection();
-        $this->validateAndSetData($category_arr);
-        $this->checkIfCurrent();
+    public function Category($category_arr = null) {
+        if ($category_arr!=null) {
+            self::checkConnection();
+            $this->validateAndSetData($category_arr);
+            $this->checkIfCurrent();
+        }
     }
 
     /**
@@ -33,6 +35,39 @@ Class Category {
     public function delete() {
         $sql = sprintf("DELETE FROM category WHERE id=%d", $this->id);
         self::$connection->execute($sql);
+    }
+
+
+    /**
+     * save field in database
+     *
+     */
+    public function save() {
+        if (self::getCategoryById($this->id) == null) {
+            // should create
+            $sql = "INSERT INTO category (name) VALUES ('%s') RETURNING id;";
+            $auth_user = User::getUserById(1);
+            $sql = sprintf($sql, pg_escape_string($this->name));
+            $results = self::$connection->execute($sql);
+            $this->id = $results[0]["id"];
+        } else {
+            // should update
+            $sql = "UPDATE category SET name='%s' WHERE id=%d";
+            $sql = sprintf($sql, pg_escape_string($this->name), addslashes($this->id));
+            self::$connection->execute($sql);
+        }
+    }
+
+    /**
+     * Update the object with array
+     *
+     * @param $arr
+     */
+    public function update($arr) {
+        // update attribute
+        foreach ($arr as $key => $value) {
+            $this->{$key} = $value;
+        }
     }
 
     /**
@@ -170,5 +205,97 @@ Class Category {
         }
         return null;
     }
+
+    /**
+     * Check delete request
+     */
+    public static function checkDeleteRequest() {
+        if (isset($_GET['category_id'])) {
+            $category = Category::getCategoryById($_GET['category_id']);
+            if ($category) {
+                $category->delete();
+            }
+        }
+        redirect(url(['_page' => 'home']));
+    }
+
+    /**
+     * Check update request
+     */
+    public static function checkUpdateRequest() {
+        self::checkConnection();
+        $data = self::validateUpdateRequest();
+        if ($data != null) {
+            $category = self::getCategoryById($data['id']);
+            $category->update($data);
+            $category->save();
+            redirect(url(['_page' => 'home', '_category' => $category->id]));
+        }
+    }
+
+    /**
+     * Check create request
+     */
+    public static function checkCreateRequest() {
+        self::checkConnection();
+        $data = self::validateCreateRequest();
+        $category = new Category();
+        if ($data != null) {
+            $category->update($data);
+            $category->save();
+            redirect(url(['_page' => 'home', '_category' => $category->id]));
+        }
+    }
+
+    /**
+     * Validate category update parameters
+     *
+     * @return array|null
+     */
+    public static function validateUpdateRequest() {
+        $errors = array();
+        $data = array();
+        self::checkID($errors, $data);
+        self::checkName($errors, $data);
+        if (count($errors) > 0 && count($data) > 0) {
+            redirect(url(['_page' => 'home']));
+        } else if (count($errors) == 0){
+            return $data;
+        }
+        return null;
+    }
+
+    /**
+     * Validate category create parameters
+     *
+     * @return array|null
+     */
+    public static function validateCreateRequest() {
+        $errors = array();
+        $data = array();
+        self::checkName($errors, $data);
+        if (count($errors) > 0 && count($data) > 0) {
+            redirect(url(['_page' => 'home']));
+        } else if (count($errors) == 0){
+            return $data;
+        }
+        return null;
+    }
+
+    private static function checkID(&$errors, &$data) {
+        if (isset($_POST['category_id']) && $_POST['category_id'] != "") {
+            $data['id'] = $_POST['category_id'];
+        } else {
+            $errors['category_id'] = 'Cannot identify category id';
+        }
+    }
+    private static function checkName(&$errors, &$data) {
+        if (isset($_POST['category_name']) && $_POST['category_name'] != "") {
+            $data['name'] = $_POST['category_name'];
+        } else {
+            $errors['category_name'] = 'Name required';
+        }
+    }
+
 
 }

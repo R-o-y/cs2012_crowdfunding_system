@@ -29,7 +29,13 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Sign up</a></li>
+                <?php
+                    if (!User::getCurrentUser()) {
+                        ?>
+                        <li><a href="#">Sign up</a></li>
+                        <?php
+                    }
+                ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome <?php echo User::getCurrentUser()->getName(); ?><span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -39,9 +45,15 @@
                     </ul>
                 </li>
             </ul>
-            <form class="navbar-form navbar-right">
-                <button type="button" class="btn btn-primary" onclick="window.location.replace('<?php echo url(['_page' => 'create_project']);?>')">Create Project</button>
-            </form>
+            <?php
+            if (User::getCurrentUser()) {
+                ?>
+                <form class="navbar-form navbar-right">
+                    <button type="button" class="btn btn-primary" onclick="window.location.replace('<?php echo url(['_page' => 'create_project']);?>')">Create Project</button>
+                </form>
+                <?php
+            }
+            ?>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

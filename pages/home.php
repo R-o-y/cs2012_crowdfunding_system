@@ -156,12 +156,59 @@
             $current_category = Category::current();
             if ($current_category) {
                 ?>
-                <h4>Current Category</h4>
+                <h4>Current Category
+                    <?php
+                    if (User::getCurrentUser() && User::getCurrentUser()->is_admin) {
+                        ?>
+                        <a href="#" class="btn btn-info btn-sm" onclick="$('#edit_form').show()">Edit</a>
+                        <a href="<?php echo url(['_page' => 'category_op', 'op' => 'delete', 'category_id' => $current_category->id])?>" class="btn btn-danger btn-sm">Delete</a>
+                        <?php
+                    }
+                    ?>
+                </h4>
                 <div class="list-group">
                     <a href="<?php echo url(['_page' => 'home', '_category' => $current_category->id]) ?>" class="list-group-item active">
                         <?php echo $current_category->name; ?> <span class="badge"><?php echo $current_category->getBelongedNumProjects(); ?></span>
                     </a>
                 </div>
+                <form class="form-horizontal" id="edit_form" style="display: none;" method="POST" action="<?php echo url(['_page' => 'category_op', 'op' => 'edit']);?>">
+                    <div class="form-group">
+                        <label for="e_name" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input autocomplete="off" type="text" class="form-control" id="e_name" name="category_name" value="<?php echo $current_category->name; ?>">
+                            <input type="hidden" name="category_id" value="<?php echo $current_category->id?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                            <button type="button" class="btn btn-default" onclick="$('#edit_form').hide()">Close</button>
+                        </div>
+                    </div>
+                </form>
+                <?php
+            }
+            ?>
+
+            <?php
+            if (User::getCurrentUser() && User::getCurrentUser()->is_admin) {
+                ?>
+                <a href="#" class="btn btn-default btn-block" onclick="$('#create_form').show()">Create Category</a>
+                <br>
+                <form class="form-horizontal" id="create_form" style="display: none;" method="POST" action="<?php echo url(['_page' => 'category_op', 'op' => 'create']);?>">
+                    <div class="form-group">
+                        <label for="c_name" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input autocomplete="off" type="text" class="form-control" id="c_name" name="category_name" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="button" class="btn btn-default" onclick="$('#create_form').hide()">Close</button>
+                        </div>
+                    </div>
+                </form>
                 <?php
             }
             ?>

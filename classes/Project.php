@@ -206,7 +206,7 @@ class Project {
         if (self::getProjectById($this->id) == null) {
             // should create
             $sql = "INSERT INTO project (title, description, goal, start_date, duration, owner_id) VALUES ('%s', '%s', %d, '%s', %d, %d) RETURNING id;";
-            $auth_user = User::getUserById(1);
+            $auth_user = User::getCurrentUser();
             $sql = sprintf($sql, addslashes($this->title), pg_escape_string($this->description), $this->goal, $this->start_date->format('Y-m-d'), $this->duration, $auth_user->id);
             $results = self::$connection->execute($sql);
             $this->id = $results[0]["id"];

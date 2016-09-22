@@ -54,10 +54,16 @@ $project = Project::getProjectById($_GET['project_id']);
             <div class="section-block">
                 <div class="funding-meta">
                     <h4>PROJECT #<?php echo $project->id;?>: </h4>
-                    <div class="pull-right">
-                        <a class="btn btn-info" href="<?php echo url(['_page' => 'edit_project', 'project_id' => $project->id]);?>">Edit</a>
-                        <a class="btn btn-danger" href="<?php echo url(['_page' => 'delete_project', 'project_id' => $project->id]);?>">Delete</a>
-                    </div>
+                    <?php
+                    if (User::getCurrentUser() && User::getCurrentUser()->is_admin) {
+                        ?>
+                        <div class="pull-right">
+                            <a class="btn btn-info" href="<?php echo url(['_page' => 'edit_project', 'project_id' => $project->id]);?>">Edit</a>
+                            <a class="btn btn-danger" href="<?php echo url(['_page' => 'delete_project', 'project_id' => $project->id]);?>">Delete</a>
+                        </div>
+                        <?php
+                    }
+                    ?>
                     <h1 class="text-<?php echo $project->getDisplayClass();?>"><?php echo $project->title;?></h1>
                     <hr>
                     <div>
