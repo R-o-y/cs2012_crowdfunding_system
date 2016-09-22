@@ -134,6 +134,42 @@ class Project {
     }
 
     /**
+     * Get bootstrap class
+     *
+     * @return string
+     */
+    public function getDisplayClass() {
+        $days_left_num = $this->getRemainingDay();
+        $summary_class = 'info';
+        if ($this->getRaisedAmount() >= $this->goal) {
+            $summary_class = 'success';
+        } else if ($days_left_num < 0) {
+            $summary_class = 'danger';
+        } else if ($days_left_num < 10) {
+            $summary_class = 'warning';
+        }
+        return $summary_class;
+    }
+
+    /**
+     * Get end day
+     */
+    public function getEndDay() {
+        $end_date = clone $this->start_date;
+        $end_date->add(new DateInterval('P' . $this->duration . 'D'));
+        return $end_date;
+    }
+
+    /**
+     * Get remaining day to go
+     */
+    public function getRemainingDay() {
+        $days_left = date_diff(new DateTime(), $this->getEndDay(), $absolute = false);
+        $days_left_num = (int)$days_left->format('%r%a');
+        return $days_left_num;
+    }
+
+    /**
      * Get total raised amount
      *
      * @return mixed
@@ -146,6 +182,23 @@ class Project {
     }
 
     /**
+     * Get image url from the description
+     */
+    public function getDescriptionImages() {
+        preg_match( '@src="([^"]+)"@' , $this->description, $match);
+        return $match;
+    }
+
+    /**
+     * Get description of project without image
+     *
+     * @return mixed
+     */
+    public function getDescriptionSummary() {
+        return truncateText(plaintext($this->description), 300);
+    }
+
+    /**
      * save field in database
      *
      */
@@ -154,14 +207,14 @@ class Project {
             // should create
             $sql = "INSERT INTO project (title, description, goal, start_date, duration, owner_id) VALUES ('%s', '%s', %d, '%s', %d, %d) RETURNING id;";
             $auth_user = User::getUserById(1);
-            $sql = sprintf($sql, addslashes($this->title), addslashes($this->description), $this->goal, $this->start_date->format('Y-m-d'), $this->duration, $auth_user->id);
+            $sql = sprintf($sql, addslashes($this->title), pg_escape_string($this->description), $this->goal, $this->start_date->format('Y-m-d'), $this->duration, $auth_user->id);
             $results = self::$connection->execute($sql);
             $this->id = $results[0]["id"];
         } else {
             // should update
             $sql = "UPDATE project SET title='%s', description='%s', goal=%d, start_date='%s', duration=%d, owner_id=%d WHERE id=%d";
             $auth_user = User::getUserById(1);
-            $sql = sprintf($sql, addslashes($this->title), addslashes($this->description), $this->goal, $this->start_date->format('Y-m-d'), $this->duration, $auth_user->id, $this->id);
+            $sql = sprintf($sql, addslashes($this->title), pg_escape_string($this->description), $this->goal, $this->start_date->format('Y-m-d'), $this->duration, $auth_user->id, $this->id);
             self::$connection->execute($sql);
         }
     }
@@ -176,6 +229,10 @@ class Project {
         foreach ($arr as $key => $value) {
             $this->{$key} = $value;
         }
+    }
+
+    public function delete() {
+        
     }
 
     /**
@@ -223,11 +280,11 @@ class Project {
      */
     public static function getAll() {
         self::checkConnection();
-        $sql = "SELECT * FROM project;";
+        $sql = "SELECT * FROM project ORDER BY start_date DESC;";
         if(isset($_GET['_category'])) {
             $category_id = $_GET['_category'];
             settype($category_id, 'integer');
-            $sql = sprintf("SELECT * FROM project WHERE id IN (SELECT project_id FROM project_category WHERE category_id = %d)", $category_id);
+            $sql = sprintf("SELECT * FROM project WHERE id IN (SELECT project_id FROM project_category WHERE category_id = %d) ORDER BY start_date DESC", $category_id);
         }
         $results = self::$connection->execute($sql);
         $projects = array();

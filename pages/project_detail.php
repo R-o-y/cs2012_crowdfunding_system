@@ -38,6 +38,9 @@ $project = Project::getProjectById($_GET['project_id']);
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <link rel="stylesheet" href="/public/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+
+
     <!-- Template CSS -->
     <link href="public/project_detail.css" rel="stylesheet">
 </head>
@@ -51,8 +54,19 @@ $project = Project::getProjectById($_GET['project_id']);
             <div class="section-block">
                 <div class="funding-meta">
                     <h4>PROJECT #<?php echo $project->id;?>: <a class="btn btn-danger" href="<?php echo url(['_page' => 'edit_project', 'project_id' => $project->id]);?>">Edit</a> </h4>
-                    <h1><?php echo $project->title;?></h1>
+                    <h1 class="text-<?php echo $project->getDisplayClass();?>"><?php echo $project->title;?></h1>
                     <hr>
+                    <div>
+                        <?php
+                        $images = $project->getDescriptionImages();
+                        if(count($images) > 0) {
+                            ?>
+                            <img class="img-responsive" <?php echo $images[0];?>>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                    <br>
                     <div class="type-meta">
                         <i class="fa fa-user"></i>
                         Created by <b><?php echo $project->getOwner()->name; ?></b>, Email <b><?php echo $project->getOwner()->email;?></b>
@@ -85,7 +99,7 @@ $project = Project::getProjectById($_GET['project_id']);
                         <?php echo $project->getNumOfDonator(); ?>
                     </strong> donators</span>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: <?php echo $percent;?>%;">
+                        <div class="progress-bar progress-bar-<?php echo $project->getDisplayClass();?>" role="progressbar" style="width: <?php echo $percent;?>%;">
                             <?php echo $percent;?>%
                         </div>
                     </div>
@@ -102,19 +116,30 @@ $project = Project::getProjectById($_GET['project_id']);
                      | End at
                     <strong>
                         <?php
-                            $end_date = clone $project->start_date;
-                            echo $end_date->add(new DateInterval('P' . $project->duration . 'D'))->format('d/m/Y');;
+                            echo $project->getEndDay()->format('d/m/Y');
                         ?>
                     </strong>
                     </span>
                 </div>
 
-                <span class="count-down"><strong>
+                <span class="count-down">
                 <?php
-                    $days_left = date_diff(new DateTime(), $project->start_date, $absolute = false);
-                    echo $days_left->format('%r%a days');
+                    $days_left = $project->getRemainingDay();
+                    if ($project->getRaisedAmount() >= $project->goal) {
+                        ?>
+                        <strong class="text-success">Completed</strong>
+                        <?php
+                    } else if ($days_left > 0) {
+                        ?>
+                        <strong><?php echo $days_left;?></strong> days to go.
+                        <?php
+                    } else {
+                        ?>
+                        <strong class="text-danger">Due</strong> <?php echo $days_left;?> days ago.
+                        <?php
+                    }
                 ?>
-                </strong>Days to go.</span>
+                </span>
                 <a href="#" class="btn btn-launch">CLICK TO FUND</a>
             </div>
 
@@ -136,11 +161,11 @@ $project = Project::getProjectById($_GET['project_id']);
                             <h1 class="section-title">
                                 <?php echo $project->title; ?>
                             </h1>
-                            <p>
+                            <div id="project_description">
                                 <?php
                                     echo nl2br($project->description);
                                 ?>
-                            </p>
+                            </div>
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="updates">
@@ -214,5 +239,14 @@ $project = Project::getProjectById($_GET['project_id']);
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+
+
+<!-- Add fancyBox -->
+<!-- Add fancyBox -->
+<script type="text/javascript" src="/public/fancybox/jquery.fancybox.pack.js"></script>
+<script>
+    $('.thumbnail').fancybox();
+</script>
+
 </body>
 </html>

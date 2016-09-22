@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="/public/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -44,34 +46,22 @@
                         </div>
                         <div class="panel-body">
                             <!--summary-->
-                            <p><?php echo $project->description; ?></p>
-
+                            <p><?php echo $project->getDescriptionSummary(); ?></p>
                             <!--image display-->
                             <div class="row">
-                                <div class="col-xs-6 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img src="https://s18.postimg.org/irz1j03nt/Screen_Shot_2016_08_04_at_12_19_28_AM.png"
-                                             alt="test1" style="height: 100px; width: 100%; display: block;">
-                                    </a>
-                                </div>
-                                <div class="col-xs-6 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img src="https://s18.postimg.org/vxj52umx5/Screen_Shot_2016_07_27_at_3_35_55_PM.png"
-                                             alt="test2" style="height: 100px; width: 100%; display: block;">
-                                    </a>
-                                </div>
-                                <div class="col-xs-6 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img src="https://s18.postimg.org/n3s8lqzyh/Screen_Shot_2016_07_25_at_11_52_58_PM.png"
-                                             alt="test3" style="height: 100px; width: 100%; display: block;">
-                                    </a>
-                                </div>
-                                <div class="col-xs-6 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img src="https://s18.postimg.org/jlg8pcz2h/Screen_Shot_2016_07_25_at_4_04_34_PM.png"
-                                             alt="test4" style="height: 100px; width: 100%; display: block;">
-                                    </a>
-                                </div>
+                                <?php
+                                $images = $project->getDescriptionImages();
+                                for ($i = 1; $images && $i <= 4 && $i < count($images); $i++) {
+                                    ?>
+                                    <div class="col-xs-6 col-md-3">
+                                        <a class="fancybox thumbnail" rel="group" href="<?php echo $images[$i];?>">
+                                            <img src="<?php echo $images[$i];?>"
+                                                 style="height: 100px; width: 100%; display: block;"/>
+                                        </a>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
                             </div>
 
                             <!--tag display-->
@@ -94,7 +84,7 @@
                             <!--<div class="alert alert-success" role="alert">...</div>-->
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="alert alert-info" role="alert">
+                                    <div class="alert alert-<?php echo $project->getDisplayClass();?>" role="alert">
                                         <div class="row">
                                             <div class="col-xs-6 col-md-3 text-center">
                                                 <strong>S$ <?php echo $project->goal; ?></strong>
@@ -109,8 +99,24 @@
                                                 <div>donors</div>
                                             </div>
                                             <div class="col-xs-6 col-md-3 text-center">
-                                                <strong><?php echo $project->duration; ?></strong>
-                                                <div>day active</div>
+                                                <?php
+                                                $days_left = $project->getRemainingDay();
+                                                if ($project->getRaisedAmount() >= $project->goal) {
+                                                    ?>
+                                                    <strong class="text-success">Completed</strong>
+                                                    <?php
+                                                } else if ($days_left > 0) {
+                                                    ?>
+                                                    <strong><?php echo $days_left;?></strong>
+                                                    <div>day active</div>
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <strong class="text-danger">Due</strong>
+                                                    <div><?php echo $days_left;?> days ago.</div>
+                                                    <?php
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
@@ -171,5 +177,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+
+<!-- Add fancyBox -->
+<script type="text/javascript" src="/public/fancybox/jquery.fancybox.pack.js"></script>
+<script>
+    $('.thumbnail').fancybox();
+</script>
+
 </body>
 </html>
