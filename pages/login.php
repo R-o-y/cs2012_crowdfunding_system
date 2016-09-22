@@ -40,11 +40,11 @@
                
               if ($user == null) {
                   $msg = 'Wrong email or password';
-               }else {           
+              } else {           
                  $_SESSION['valid'] = true;
                  $_SESSION['timeout'] = time();
                  $_SESSION['username'] = $user->getName();
-                 header("Location: http://localhost");          
+                 header("Location: ./");          
                }
             }
             
