@@ -1,5 +1,5 @@
 <?php
-if (isset($_GET['op'])) {
+if (isset($_GET['op']) && User::getCurrentUser() && User::getCurrentUser()->is_admin) {
     switch ($_GET['op']) {
         case 'delete':
             Category::checkDeleteRequest();

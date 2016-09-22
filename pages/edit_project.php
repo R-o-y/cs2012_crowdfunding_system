@@ -1,15 +1,20 @@
 <?php
-// update request
-Project::checkUpdateRequest();
+if (!User::getCurrentUser()) {
+    redirect(url(['_page' => 'home']));
+}
 
 // display request
 $project = null;
 if (isset($_GET['project_id'])) {
     $project = Project::getProjectById($_GET['project_id']);
-} else {
-    if ($project == null) {
-        //redirect(url(['_page' => 'home']));
+    if (($project->owner_id == User::getCurrentUser()->id) || User::getCurrentUser()->is_admin) {
+        Project::checkUpdateRequest();
+    } else {
+        redirect(url(['_page' => 'home']));
     }
+}
+if ($project == null) {
+    redirect(url(['_page' => 'home']));
 }
 ?>
 <!DOCTYPE html>
@@ -47,7 +52,7 @@ if (isset($_GET['project_id'])) {
     <div class="row">
         <div class="col-md-8">
             <h4>Edit CrowdFunding Project</h4>
-            <form class="form-horizontal" method="POST" action="<?php echo url(['_page' => 'edit_project']);?>">
+            <form class="form-horizontal" method="POST" action="<?php echo url(['_page' => 'edit_project', 'project_id' => $project->id]);?>">
                 <?php require('pages/_project_form.php'); ?>
                 <div class="text-right">
                     <button type="submit" class="btn btn-primary">Edit</button>
@@ -79,7 +84,10 @@ if (isset($_GET['project_id'])) {
     });</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
-<script>$('#project_start_date').datepicker();</script>
+<script>$('#project_start_date').datepicker({
+        format: 'dd/mm/yyyy',
+        todayBtn: true
+    });</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script type="text/javascript">

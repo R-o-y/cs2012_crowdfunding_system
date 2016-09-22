@@ -416,7 +416,7 @@ class Project {
     }
     private static function checkStartDate(&$errors, &$data) {
         if (isset($_POST['project_start_date']) && $_POST['project_start_date'] != "") {
-            $data['start_date'] = (new DateTime())->setTimestamp(strtotime($_POST['project_start_date']));
+            $data['start_date'] = DateTime::createFromFormat('d/m/Y', $_POST['project_start_date']);
         } else {
             $errors['project_start_date'] = 'Start date required';
         }

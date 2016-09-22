@@ -160,6 +160,7 @@
                     <?php
                     if (User::getCurrentUser() && User::getCurrentUser()->is_admin) {
                         ?>
+
                         <a href="#" class="btn btn-info btn-sm" onclick="$('#edit_form').show()">Edit</a>
                         <a href="<?php echo url(['_page' => 'category_op', 'op' => 'delete', 'category_id' => $current_category->id])?>" class="btn btn-danger btn-sm">Delete</a>
                         <?php

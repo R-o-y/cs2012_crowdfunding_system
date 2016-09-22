@@ -58,7 +58,7 @@ class User {
             die("isAdmin required");
         }
 		$this->id = $user_arr['id'];
-		$this->is_admin = $user_arr['is_admin'];
+		$this->is_admin = $user_arr['is_admin'] == "f" ? false : true;
 		$this->name = $user_arr['name'];
 		$this->email = $user_arr['email'];
 		$this->pass = $user_arr['password'];

@@ -70,7 +70,10 @@ Project::checkCreateRequest();
     });</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
-<script>$('#project_start_date').datepicker();</script>
+<script>$('#project_start_date').datepicker({
+        format: 'dd/mm/yyyy',
+        todayBtn: true
+    });</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script type="text/javascript">

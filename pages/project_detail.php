@@ -55,7 +55,7 @@ $project = Project::getProjectById($_GET['project_id']);
                 <div class="funding-meta">
                     <h4>PROJECT #<?php echo $project->id;?>: </h4>
                     <?php
-                    if (User::getCurrentUser() && User::getCurrentUser()->is_admin) {
+                    if (User::getCurrentUser() && User::getCurrentUser()->is_admin || $project->owner_id == User::getCurrentUser()->id) {
                         ?>
                         <div class="pull-right">
                             <a class="btn btn-info" href="<?php echo url(['_page' => 'edit_project', 'project_id' => $project->id]);?>">Edit</a>
