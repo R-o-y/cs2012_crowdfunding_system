@@ -77,5 +77,40 @@ class Donation {
         $this->amount = $donation_arr['amount'];
         $this->created = new DateTime($donation_arr['created']);
     }
+    public static function getDonationByUserAndProject($user_id, $project_id) {
+        self::checkConnection();
+        settype($user_id, 'integer');
+        settype($project_id, 'integer');
+        $sql = sprintf("SELECT * FROM donation WHERE user_id = %d AND project_id = %d;", $user_id, $project_id);
+        $results = self::$connection->execute($sql);
+        if (count($results) == 1) {
+            return new Donation($results[0]);
+        } else {
+            return null;
+        }
+    }
+    public static function createDonation($user_id, $project_id, $message, $amount) {
+        self::checkConnection();
+        date_default_timezone_set("Asia/Singapore");
+        $created = date('Y-m-d h:i:s', time());
+        settype($user_id, 'integer');
+        settype($project_id, 'integer');
+        settype($amount, 'float');
+        if (self::getDonationByUserAndProject($user_id, $project_id) ==null) {
+            $sql = "INSERT INTO donation (user_id, project_id, message, amount, created) VALUES (%d, %d, '%s', %.2f, '%s');";
+            $sql = sprintf($sql, $user_id, $project_id, pg_escape_string($message), $amount, $created);
+            $results = self::$connection->execute($sql); 
+        } else {
+            $sql = "UPDATE donation SET message = '%s', amount = amount + %.2f, created = '%s' WHERE user_id = %d RETURNING *;";
+            $sql = sprintf($sql, pg_escape_string($message), $amount, $created, $user_id);
+            $results = self::$connection->execute($sql); 
+        }
+        if ($results!=null && count($results)==1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
 }

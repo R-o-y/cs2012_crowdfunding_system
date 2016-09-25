@@ -45,6 +45,37 @@ $project = Project::getProjectById($_GET['project_id']);
     <link href="public/project_detail.css" rel="stylesheet">
 </head>
 <body>
+ <!-- used by click to found segment -->
+<script> function successAlert() {alert("Thanks for your donation!");} </script>
+<script> function failAlert() {alert("Failure!");}</script>
+<?php
+$days_left = $project->getRemainingDay();  
+$msg ='';
+$login = false;
+if ($days_left > 0) {
+    if (user::getCurrentUser()) {
+        $login = true;
+        $user = User::getCurrentUser()->getName();
+        $msg = "Please fill in the form, ".$user;
+        if (isset($_POST['submit']) && !empty($_POST['amount']) && !empty($_POST['message'])) {
+            $user_id = User::getCurrentUser()->id;
+            $project_id = $project->id;
+            if(!isset($_SESSION['alerted'])) {
+                if (Donation::createDonation($user_id, $project_id, $_POST['message'], $_POST['amount'])) { //what type of amount?
+                    echo "<script> successAlert(); </script>";
+                    $_SESSION['alerted'] = true;
+                } else {
+                    echo "<script> failAlert();</script>";
+                    $_SESSION['alerted'] = true;
+                }
+            }
+        }
+    } else {
+        $msg= '<span style="color:red">Please<a href="./?_page=login"> login </a>first</span>'; //need referer;
+    } 
+} else {$msg = '<span style="color:red">Already outdated</span>';}
+?>
+
 <div class="container">
     <?php require('pages/_header.php'); ?>
 
@@ -134,7 +165,7 @@ $project = Project::getProjectById($_GET['project_id']);
 
                 <span class="count-down">
                 <?php
-                    $days_left = $project->getRemainingDay();
+                    // $days_left = $project->getRemainingDay();
                     if ($project->getRaisedAmount() >= $project->goal) {
                         ?>
                         <strong class="text-success">Completed</strong>
@@ -150,7 +181,62 @@ $project = Project::getProjectById($_GET['project_id']);
                     }
                 ?>
                 </span>
-                <a href="#" class="btn btn-launch">CLICK TO FUND</a>
+
+
+                <a data-toggle="modal" data-target="#myModal" class="btn btn-launch">CLICK TO FUND</a>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Donate</h4>
+                        <p><?php echo $msg; ?></p>
+                      </div>
+                    <?php if($login&&$days_left > 0) { ?>
+                    <form role="form" action="<?php $page_id =$_GET['project_id']; echo url(['_page'=>'project_detail', 'project_id'=>$page_id])  ?>" method="POST">
+                     <div class="modal-body">
+                        
+                            <fieldset>
+                             <div class="form-group">
+                               <label class="col-sm-2 control-label"
+                                         for="inputAmount">Amount</label>
+                               <div class="col-sm-10">
+                                   <input type="number" name="amount" class="form-control" 
+                                   id="inputAmount" placeholder="100.00" step="0.01" required>
+                               </div>
+                             </div>
+
+                             <div class="form-group">
+                             <label></label>
+
+                             </div>
+
+                             <div class="form-group">
+                               <label class="col-sm-2 control-label"
+                                     for="inputMessage" >Message</label>
+                               <div class="col-sm-10">
+                                    <textarea type="text" name="message" class="form-control"
+                                       id="inputMessage" placeholder="Why do you support it" required></textarea>
+                               </div>
+                             </div>
+                             </fieldset>
+                          
+                      </div> 
+                      
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-default" id="submit" name="submit">Submit</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                      
+                      </form>
+                      <?php } ?>
+                    </div>
+
+
+                    </div>
+                    
+                </div>
             </div>
 
             <!--tabs-->

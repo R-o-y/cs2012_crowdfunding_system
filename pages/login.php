@@ -43,7 +43,7 @@
                               $_SESSION['timeout'] = time();
                               $_SESSION['email'] = $user->getEmail();
                               $_SESSION['username'] = $user->getName();
-                              header("Location: ./");
+                              header("Location: ./?_page=home");
                           }
                       }
 

@@ -39,7 +39,7 @@ class Database {
      * Display error to user
      */
     public function report_error() {
-        if (!$this->connection && pg_last_error($this->connection)) {
+        if ($this->connection && pg_last_error($this->connection)) {
             die(pg_last_error($this->connection));
         } else if (!$this->connection) {
             die("No database connection!");
