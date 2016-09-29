@@ -45,7 +45,7 @@ $project = Project::getProjectById($_GET['project_id']);
     <link href="public/project_detail.css" rel="stylesheet">
 </head>
 <body>
- <!-- used by click to found segment -->
+ <!-- used by click to fund segment -->
 <script> function successAlert() {alert("Thanks for your donation!");} </script>
 <script> function failAlert() {alert("Failure!");}</script>
 <?php
@@ -216,7 +216,7 @@ if ($days_left > 0) {
                                <label class="col-sm-2 control-label"
                                      for="inputMessage" >Message</label>
                                <div class="col-sm-10">
-                                    <textarea type="text" name="message" class="form-control"
+                                    <textarea style="height: 150px;" type="text" name="message" class="form-control"
                                        id="inputMessage" placeholder="Why do you support it" required></textarea>
                                </div>
                              </div>
