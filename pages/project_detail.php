@@ -45,9 +45,8 @@ $project = Project::getProjectById($_GET['project_id']);
     <link href="public/project_detail.css" rel="stylesheet">
 </head>
 <body>
- <!-- used by click to fund segment -->
+ <!-- used by click to found segment -->
 <script> function successAlert() {alert("Thanks for your donation!");} </script>
-<script> function failAlert() {alert("Failure!");}</script>
 <?php
 $days_left = $project->getRemainingDay();  
 $msg ='';
@@ -57,17 +56,12 @@ if ($days_left > 0) {
         $login = true;
         $user = User::getCurrentUser()->getName();
         $msg = "Please fill in the form, ".$user;
-        if (isset($_POST['submit']) && !empty($_POST['amount']) && !empty($_POST['message'])) {
+        if (isset($_POST['submit']) && !empty($_POST['amount']) && !empty($_POST['message'])) {//need update to avoid resubmission after refresh.
             $user_id = User::getCurrentUser()->id;
             $project_id = $project->id;
-            if(!isset($_SESSION['alerted'])) {
-                if (Donation::createDonation($user_id, $project_id, $_POST['message'], $_POST['amount'])) { //what type of amount?
-                    echo "<script> successAlert(); </script>";
-                    $_SESSION['alerted'] = true;
-                } else {
-                    echo "<script> failAlert();</script>";
-                    $_SESSION['alerted'] = true;
-                }
+            if (Donation::createDonation($user_id, $project_id, $_POST['message'], $_POST['amount'])) {
+                echo "<script> successAlert(); </script>";
+            } else {
             }
         }
     } else {
@@ -203,7 +197,7 @@ if ($days_left > 0) {
                                          for="inputAmount">Amount</label>
                                <div class="col-sm-10">
                                    <input type="number" name="amount" class="form-control" 
-                                   id="inputAmount" placeholder="100.00" step="0.01" required>
+                                   id="inputAmount" placeholder="100.00" step="0.01" min="0.01" required>
                                </div>
                              </div>
 

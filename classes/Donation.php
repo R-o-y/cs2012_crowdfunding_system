@@ -101,16 +101,12 @@ class Donation {
             $sql = sprintf($sql, $user_id, $project_id, pg_escape_string($message), $amount, $created);
             $results = self::$connection->execute($sql); 
         } else {
-            $sql = "UPDATE donation SET message = '%s', amount = amount + %.2f, created = '%s' WHERE user_id = %d RETURNING *;";
-            $sql = sprintf($sql, pg_escape_string($message), $amount, $created, $user_id);
+            $sql = "UPDATE donation SET message = '%s', amount = amount + %.2f, created = '%s' WHERE user_id = %d AND project_id = %d;";
+            $sql = sprintf($sql, pg_escape_string($message), $amount, $created, $user_id, $project_id);
             $results = self::$connection->execute($sql); 
         }
-        if ($results!=null && count($results)==1) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return true;
+
     }
 
 }
