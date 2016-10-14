@@ -285,12 +285,29 @@ class Project {
      */
     public static function getAll() {
         self::checkConnection();
-        $sql = "SELECT * FROM project ORDER BY start_date DESC;";
+        $sql = "SELECT *,(start_date+duration) AS end_date FROM project ORDER BY end_date DESC;";
         if(isset($_GET['_category'])) {
             $category_id = $_GET['_category'];
             settype($category_id, 'integer');
-            $sql = sprintf("SELECT * FROM project WHERE id IN (SELECT project_id FROM project_category WHERE category_id = %d) ORDER BY start_date DESC", $category_id);
+            $sql = sprintf("SELECT *, (start_date+duration) as end_date FROM project WHERE id IN (SELECT project_id FROM project_category WHERE category_id = %d) ORDER BY end_date DESC", $category_id);
         }
+        $results = self::$connection->execute($sql);
+        $projects = array();
+        foreach ($results as $project_arr) {
+            array_push($projects, new Project($project_arr));
+        }
+        return $projects;
+    }
+
+    /**
+     * Get projects which have title containing the key
+     *
+     * @return array
+     */
+    public static function getProjectsByTitle($key) {
+        self::checkConnection();
+        settype($key, 'string');
+        $sql = "SELECT *, (start_date+duration) AS end_date FROM project where LOWER(title) LIKE LOWER('%$key%') ORDER BY end_date DESC;";  // or use ILIKE to achieve case-insensitive search
         $results = self::$connection->execute($sql);
         $projects = array();
         foreach ($results as $project_arr) {

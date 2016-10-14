@@ -28,6 +28,13 @@
                 <li><a href="#">Contact</a></li>
             </ul>
 
+            <form class="has-success navbar-form navbar-left" method="get" action="">
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="search" name="search_key">
+                    <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+            </form>
+            
             <ul class="nav navbar-nav navbar-right">
                 <?php
                     if (!User::getCurrentUser()) {
