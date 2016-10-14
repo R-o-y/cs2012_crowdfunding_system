@@ -23,7 +23,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/public/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="./public/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+
+    <!-- font awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,7 +42,11 @@
         <div class="col-md-8">
             <h4>Current</h4>
             <?php
-            $projects = Project::getAll();
+            if (isset($_GET["search_key"])) {
+                $projects = Project::getProjectsByTitle($_GET["search_key"]);
+            }
+            else 
+                $projects = Project::getAll();
             if (count($projects)) {
                 foreach ($projects as $project) {
                     ?>
@@ -231,7 +238,7 @@
         crossorigin="anonymous"></script>
 
 <!-- Add fancyBox -->
-<script type="text/javascript" src="/public/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript" src="./public/fancybox/jquery.fancybox.pack.js"></script>
 <script>
     $('.thumbnail').fancybox();
 </script>
