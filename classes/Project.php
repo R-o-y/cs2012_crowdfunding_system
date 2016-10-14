@@ -285,11 +285,11 @@ class Project {
      */
     public static function getAll() {
         self::checkConnection();
-        $sql = "SELECT * FROM project ORDER BY start_date DESC;";
+        $sql = "SELECT p.*, (p.start_date+p.duration) AS end_date, (p.goal - COALESCE(SUM(d.amount), 0)) AS rem FROM project p LEFT JOIN donation d ON d.project_id = p.id GROUP BY p.id ORDER BY end_date DESC, rem DESC;"; //coalesce similar with isnull;
         if(isset($_GET['_category'])) {
             $category_id = $_GET['_category'];
             settype($category_id, 'integer');
-            $sql = sprintf("SELECT * FROM project WHERE id IN (SELECT project_id FROM project_category WHERE category_id = %d) ORDER BY start_date DESC", $category_id);
+            $sql = sprintf("SELECT p.*,(p.start_date+p.duration) AS end_date, (p.goal - COALESCE(SUM(d.amount), 0)) AS rem FROM project p LEFT JOIN donation d ON d.project_id = p.id WHERE p.id IN (SELECT c.project_id FROM project_category c WHERE c.category_id = %d) GROUP BY p.id ORDER BY end_date DESC, rem DESC;", $category_id);
         }
         $results = self::$connection->execute($sql);
         $projects = array();
