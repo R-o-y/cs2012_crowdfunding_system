@@ -62,8 +62,22 @@ class User {
 		$this->name = $user_arr['name'];
 		$this->email = $user_arr['email'];
 		$this->pass = $user_arr['password'];
+
 	}
 
+	public function addUser() {
+		settype($this->id, 'integer'); settype($this->name, 'string');
+		settype($this->email, 'string'); settype($this->pass, 'string'); settype($this->is_admin, 'bool');
+		
+		if(User::getUserByEmail($this->email) != null || User::getUserById($this->id) != null) {
+			return false;
+		}
+		$sql = sprintf("INSERT INTO account VALUES(%d, '%s', '%s', '%s', '%d');",
+				$this->id, $this->name, $this->email, $this->pass, $this->is_admin);
+		$result = self::$connection->execute($sql);
+		return true;
+
+	}
     /**
      * Get user by id
      *

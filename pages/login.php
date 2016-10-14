@@ -69,7 +69,7 @@
                   </div>
               </div>
               <div class="bottom text-center">
-                  New here ? <a href="#"><b>Join Us</b></a>
+                  New here ? <a href="<?php echo url(['_page'=>'signup']) ?>"><b>Join Us</b></a>
               </div>
           </div>
       </div>
