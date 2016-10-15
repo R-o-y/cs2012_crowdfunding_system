@@ -35,18 +35,22 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
+<body <?php if(User::getCurrentUser()) { echo 'onload="set_interval()" onmousemove="reset_interval()" onclick="reset_interval()" onkeypress="reset_interval()" onscroll="reset_interval()"';}?>>
 <div class="container">
     <?php require('pages/_header.php'); ?>
     <div class="row">
         <div class="col-md-8">
-            <h4>Current</h4>
             <?php
+            $search_flag = false;
             if (isset($_GET["search_key"])) {
                 $projects = Project::getProjectsByTitle($_GET["search_key"]);
+                $search_flag = true;
+                echo "<h4>Search Results for '".$_GET['search_key']."'</h4>";
             }
-            else 
+            else {
                 $projects = Project::getAll();
+                echo "<h4>Current</h4>";
+            }
             if (count($projects)) {
                 foreach ($projects as $project) {
                     ?>
@@ -147,12 +151,18 @@
                     <!--project end-->
                     <?php
                 }
-            } else {
+            } else if(!$search_flag){
                 ?>
                 <div class="alert alert-warning" role="alert">
                     Current not project. <a href="#"><strong>Be the first one</strong></a>  to post project for crowdfunding?
                 </div>
                 <?php
+            } else {
+            ?>
+                <div class="alert alert-warning" role="alert">
+                    No Results Found. 
+                </div>
+            <?php 
             }
             ?>
 
@@ -242,6 +252,8 @@
 <script>
     $('.thumbnail').fancybox();
 </script>
+<!-- Add Auto Logout -->
+<script type="text/javascript" src="javascript/autologout.js"></script>
 
 </body>
 </html>
