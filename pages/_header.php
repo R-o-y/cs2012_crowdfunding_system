@@ -28,7 +28,7 @@
                 <li><a href="#">Contact</a></li>
             </ul>
 
-            <form lass="has-success navbar-form navbar-left" method="get" action="">
+            <form class="has-success navbar-form navbar-left" method="get" action="">
                 <div class="input-group">
                     <input class="form-control" type="search" placeholder="search" name="search_key">
                     <span class="input-group-addon"><button class="btn btn-secondary" style="padding:0;background-color:#dff0d8;line-height: 1"><i class="fa fa-search" aria-hidden="true"></i></button></span>
