@@ -32,14 +32,14 @@
                       <?php
                       $msg = '';
                       if (isset($_POST['signup']) && !empty($_POST['email'])
-                          && !empty($_POST['password']) && !empty($_POST['id'])
+                          && !empty($_POST['password'])
                       		&& !empty($_POST['is_admin']) && !empty($_POST['name'])) {
 
                           $user = new User($_POST);
                           $result = $user->addUser();
                           
                           if ($result == false) {
-                              $msg = 'Try to modify your infomation.';
+                              $msg = 'Account has been registered!';
                           } else {
                               $_SESSION['valid'] = true;
                               $_SESSION['timeout'] = time();
@@ -52,10 +52,6 @@
 
                       ?>
                       <form role="form" action = "<?php echo url(['_page'=>'signup']); ?>" method = "post">
-                          <div class="form-group">
-                              <label for="exampleInputId1">Id</label>
-                              <input type="id" class="form-control" id="exampleInput1" name="id" placeholder="Enter id" required>
-                          </div>
                           <div class="form-group">
                               <label for="exampleInputName1">Name</label>
                               <input type="name" class="form-control" id="exampleInputName1" name = "name" placeholder="Enter name" required>

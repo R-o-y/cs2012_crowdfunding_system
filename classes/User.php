@@ -9,7 +9,6 @@
 class User {
 	private static $connection;
 	
-	public $id;
 	public $is_admin;
     public $name;
     public $email;
@@ -42,9 +41,6 @@ class User {
      * @param $user_arr
      */
 	private function validateAndSetData($user_arr) {
-		if(!isset($user_arr['id'])) {
-			die("User id required");
-		}
 		if(!isset($user_arr['name'])) {
 			die("Name required");
 		}
@@ -57,8 +53,7 @@ class User {
         if(!isset($user_arr['is_admin'])) {
             die("isAdmin required");
         }
-		$this->id = $user_arr['id'];
-		$this->is_admin = $user_arr['is_admin'] == "f" ? false : true;
+        $this->is_admin = $user_arr['is_admin'] == "f" ? false : true;
 		$this->name = $user_arr['name'];
 		$this->email = $user_arr['email'];
 		$this->pass = $user_arr['password'];
@@ -66,14 +61,14 @@ class User {
 	}
 
 	public function addUser() {
-		settype($this->id, 'integer'); settype($this->name, 'string');
+		settype($this->name, 'string');
 		settype($this->email, 'string'); settype($this->pass, 'string'); settype($this->is_admin, 'bool');
 		
-		if(User::getUserByEmail($this->email) != null || User::getUserById($this->id) != null) {
+		if(User::getUserByEmail($this->email) != null) {
 			return false;
 		}
-		$sql = sprintf("INSERT INTO account VALUES(%d, '%s', '%s', '%s', '%d');",
-				$this->id, $this->name, $this->email, $this->pass, $this->is_admin);
+		$sql = sprintf("INSERT INTO account VALUES('%s', '%s', '%s', '%d');",
+				$this->name, $this->email, $this->pass, $this->is_admin);
 		$result = self::$connection->execute($sql);
 		return true;
 
