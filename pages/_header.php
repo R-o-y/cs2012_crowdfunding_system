@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-md-3">
-        <img class="img-responsive" alt="logo" src="image/logo.png">
+        <a href="./"><img class="img-responsive" alt="logo" src="image/logo.png"></a>
     </div>
 </div>
 
@@ -17,26 +17,30 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Crowdfunding</a>
+            <a class="navbar-brand" href="./">Crowdfunding</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="<?php echo (isset($_GET['_page'])) ? (($_GET['_page'] == "home") ? 'active' : '') : 'active';?>"><a href="<?php echo url(['_page' => 'home']); ?>">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="https://github.com/R-o-y/cs2012_crowdfunding_system">About</a></li>
             </ul>
 
-            <form class="has-success navbar-form navbar-left" method="get" action="">
-                <div class="input-group">
-                    <input class="form-control" type="search" placeholder="search" name="search_key">
-                    <span class="input-group-addon"><button class="btn btn-secondary" style="padding:0;background-color:#dff0d8;line-height: 1"><i class="fa fa-search" aria-hidden="true"></i></button></span>
-                </div>
-                
-            </form>
-            
-            
+            <?php
+            if (User::getCurrentUser() != null) {
+              ?>
+              <form class="has-success navbar-form navbar-left" method="get" action="">
+                  <div class="input-group">
+                      <input class="form-control" type="search" placeholder="search" name="search_key">
+                      <span class="input-group-addon"><button class="btn btn-secondary" style="padding:0;background-color:#dff0d8;line-height: 1"><i class="fa fa-search" aria-hidden="true"></i></button></span>
+                  </div>
+
+              </form>
+              <?php
+            }
+             ?>
+
             <ul class="nav navbar-nav navbar-right">
                 <?php
                     if (!User::getCurrentUser()) {

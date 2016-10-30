@@ -8,18 +8,19 @@
  */
 class User {
 	private static $connection;
-	
-	public $is_admin;
-    public $name;
-    public $email;
-    public $pass;
+
+	public $id;
+  public $is_admin;
+  public $name;
+  public $email;
+  public $pass;
 
     /**
      * User constructor.
      * @param $user_arr
      */
 	public function User($user_arr) {
-        self::checkConnection();
+    self::checkConnection();
 		$this->validateAndSetData($user_arr);
 	}
 
@@ -50,26 +51,28 @@ class User {
 		if(!isset($user_arr['password'])) {
 			die("Password required");
 		}
-        if(!isset($user_arr['is_admin'])) {
-            die("isAdmin required");
-        }
-        $this->is_admin = $user_arr['is_admin'] == "f" ? false : true;
+    if(!isset($user_arr['is_admin'])) {
+	  	die("isAdmin required");
+    }
+
+		$this->is_admin = $user_arr['is_admin'] == "f" ? false : true;
 		$this->name = $user_arr['name'];
 		$this->email = $user_arr['email'];
 		$this->pass = $user_arr['password'];
-
+		$this->id = isset($user_arr['id']) ? $user_arr['id'] : 1;
 	}
 
 	public function addUser() {
 		settype($this->name, 'string');
 		settype($this->email, 'string'); settype($this->pass, 'string'); settype($this->is_admin, 'bool');
-		
+
 		if(User::getUserByEmail($this->email) != null) {
 			return false;
 		}
-		$sql = sprintf("INSERT INTO account VALUES('%s', '%s', '%s', '%d');",
-				$this->name, $this->email, $this->pass, $this->is_admin);
+		$sql = sprintf("INSERT INTO account(name, email, password, is_admin) VALUES('%s', '%s', '%s', '%d') RETURNING id;",
+										$this->name, $this->email, $this->pass, $this->is_admin);
 		$result = self::$connection->execute($sql);
+		$this->id = $results[0]["id"];
 		return true;
 
 	}
@@ -99,7 +102,7 @@ class User {
         } else {
             return null;
         }
-    }   
+    }
 	public static function checkValidity($email, $password) {
         self::checkConnection();
         $sql = sprintf("SELECT * FROM account WHERE email = '%s' AND password = '%s';", $email, $password);

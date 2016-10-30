@@ -190,6 +190,15 @@ class Project {
     }
 
     /**
+     * Get all image urls from the description
+     */
+    public function getAllImagesUrls() {
+        $matches = [];
+        preg_match_all('@src="([^"]+)"@', $this->description, $matches);
+        return $matches[1];
+    }
+
+    /**
      * Get description of project without image
      *
      * @return mixed
@@ -207,14 +216,13 @@ class Project {
             // should create
             $sql = "INSERT INTO project (title, description, goal, start_date, duration, owner_id) VALUES ('%s', '%s', %d, '%s', %d, %d) RETURNING id;";
             $auth_user = User::getCurrentUser();
-            $sql = sprintf($sql, addslashes($this->title), pg_escape_string($this->description), $this->goal, $this->start_date->format('Y-m-d'), $this->duration, $auth_user->id);
+            $sql = sprintf($sql, pg_escape_string($this->title), pg_escape_string($this->description), $this->goal, $this->start_date->format('Y-m-d'), $this->duration, $auth_user->id);
             $results = self::$connection->execute($sql);
             $this->id = $results[0]["id"];
         } else {
             // should update
-            $sql = "UPDATE project SET title='%s', description='%s', goal=%d, start_date='%s', duration=%d, owner_id=%d WHERE id=%d";
-            $auth_user = User::getUserById(1);
-            $sql = sprintf($sql, addslashes($this->title), pg_escape_string($this->description), $this->goal, $this->start_date->format('Y-m-d'), $this->duration, $auth_user->id, $this->id);
+            $sql = "UPDATE project SET title='%s', description='%s', goal=%d, start_date='%s', duration=%d WHERE id=%d";
+            $sql = sprintf($sql, pg_escape_string($this->title), pg_escape_string($this->description), $this->goal, $this->start_date->format('Y-m-d'), $this->duration, $this->id);
             self::$connection->execute($sql);
         }
     }

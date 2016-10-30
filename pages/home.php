@@ -65,7 +65,7 @@
                             <!--image display-->
                             <div class="row">
                                 <?php
-                                $images = $project->getDescriptionImages();
+                                $images = $project->getAllImagesUrls();
                                 for ($i = 1; $images && $i <= 4 && $i < count($images); $i++) {
                                     ?>
                                     <div class="col-xs-6 col-md-3">
@@ -160,9 +160,9 @@
             } else {
             ?>
                 <div class="alert alert-warning" role="alert">
-                    No Results Found. 
+                    No Results Found.
                 </div>
-            <?php 
+            <?php
             }
             ?>
 

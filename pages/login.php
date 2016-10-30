@@ -16,14 +16,17 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- font awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
   </head>
   <body>
-  
+
   <div class="container">
+      <?php require('pages/_header.php'); ?>
       <ol class="breadcrumb">
           <li><a href="<?php echo url(['_page'=>'home']) ?>">Home</a></li>
           <li class="active">User Access</li>
-      </ol> 
+      </ol>
       <div class="row">
           <div class="col-md-4 col-md-offset-4" style="">
               <div class="panel panel-default">
