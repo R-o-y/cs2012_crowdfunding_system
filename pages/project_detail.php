@@ -350,7 +350,10 @@ if ($days_left > 0) {
 <!-- Add fancyBox -->
 <script type="text/javascript" src="/public/fancybox/jquery.fancybox.pack.js"></script>
 <script>
+$(function() {
     $('.thumbnail').fancybox();
+    $('img').addClass("img-responsive");
+});
 </script>
 
 </body>
