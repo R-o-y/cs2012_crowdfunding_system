@@ -315,7 +315,7 @@ class Project {
     public static function getProjectsByTitle($key) {
         self::checkConnection();
         settype($key, 'string');
-        $sql = "SELECT *, (start_date+duration) AS end_date FROM project where LOWER(title) LIKE LOWER('%$key%') ORDER BY end_date DESC;";  // or use ILIKE to achieve case-insensitive search
+        $sql = "SELECT *, (start_date+duration) AS end_date FROM project where LOWER(title) LIKE LOWER('%$key%') OR LOWER(description) LIKE LOWER('%$key%') ORDER BY end_date DESC;";  // or use ILIKE to achieve case-insensitive search
         $results = self::$connection->execute($sql);
         $projects = array();
         foreach ($results as $project_arr) {
